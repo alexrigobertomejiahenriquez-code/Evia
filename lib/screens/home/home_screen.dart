@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'widgets/home_tile.dart';
+import 'assistant_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   void _openPlaceholder(BuildContext context, String title) {
+    // Si es Asistente IA, abrir la pantalla real del asistente.
+    if (title == 'Asistente IA') {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AssistantScreen()));
+      return;
+    }
+
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlaceholderScreen(title: title)));
   }
 

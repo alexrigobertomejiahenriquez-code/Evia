@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'ia_service.dart';
+import '../ia/ia_service.dart';
 
 class MockIaService implements IaService {
   @override

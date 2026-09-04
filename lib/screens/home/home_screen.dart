@@ -1,7 +1,10 @@
+// lib/screens/home/home_screen.dart
+
 import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'widgets/home_tile.dart';
 import 'assistant_screen.dart';
+import '../../features/shopping/presentation/pages/shopping_page.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,6 +13,12 @@ class HomeScreen extends StatelessWidget {
     // Si es Asistente IA, abrir la pantalla real del asistente.
     if (title == 'Asistente IA') {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AssistantScreen()));
+      return;
+    }
+
+    // Si es Compras, abrir el ShoppingPage
+    if (title == '🛒 Compras' || title == 'Compras') {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ShoppingPage()));
       return;
     }
 
@@ -27,6 +36,7 @@ class HomeScreen extends StatelessWidget {
       {'icon': Icons.calendar_month, 'title': 'Agenda'},
       {'icon': Icons.insert_drive_file, 'title': 'Documentos'},
       {'icon': Icons.build, 'title': 'Herramientas'},
+      {'icon': Icons.shopping_cart, 'title': '🛒 Compras'},
     ];
 
     return AppScaffold(

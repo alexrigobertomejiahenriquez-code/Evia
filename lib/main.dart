@@ -1,6 +1,9 @@
+// lib/main.dart
+
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
 import 'navigation/bottom_navigation.dart';
+import 'navigation/app_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +38,7 @@ class _EviaAppState extends State<EviaApp> {
           themeMode: widget.appTheme.themeMode,
           debugShowCheckedModeBanner: false,
           home: MainNavigation(appTheme: widget.appTheme),
+          onGenerateRoute: AppRouteGenerator.onGenerateRoute,
         );
       },
     );

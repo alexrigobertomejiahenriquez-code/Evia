@@ -1,10 +1,11 @@
 // lib/screens/home/home_screen.dart
 
+// lib/screens/home/home_screen.dart
+
 import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'widgets/home_tile.dart';
-import 'assistant_screen.dart';
-import '../../features/shopping/presentation/pages/shopping_page.dart';
+import '../../navigation/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,17 +13,17 @@ class HomeScreen extends StatelessWidget {
   void _openPlaceholder(BuildContext context, String title) {
     // Si es Asistente IA, abrir la pantalla real del asistente.
     if (title == 'Asistente IA') {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AssistantScreen()));
+      Navigator.of(context).pushNamed(AppRoutes.assistant);
       return;
     }
 
     // Si es Compras, abrir el ShoppingPage
     if (title == '🛒 Compras' || title == 'Compras') {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ShoppingPage()));
+      Navigator.of(context).pushNamed(AppRoutes.shopping);
       return;
     }
 
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlaceholderScreen(title: title)));
+    Navigator.of(context).pushNamed(AppRoutes.placeholder, arguments: title);
   }
 
   @override

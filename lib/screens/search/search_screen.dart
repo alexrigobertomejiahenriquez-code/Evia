@@ -1,9 +1,10 @@
+// lib/screens/search/search_screen.dart
+
 import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'search_service.dart';
 import 'search_model.dart';
-import '../home/assistant_screen.dart';
-import '../home/home_screen.dart';
+import '../../navigation/app_routes.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -62,12 +63,12 @@ class _SearchScreenState extends State<SearchScreen> {
   void _openResult(SearchResult r) {
     // For known routes, navigate to the real screen when implemented.
     if (r.route == 'assistant') {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AssistantScreen()));
+      Navigator.of(context).pushNamed(AppRoutes.assistant);
       return;
     }
 
     // Otherwise open PlaceholderScreen with title
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlaceholderScreen(title: r.title)));
+    Navigator.of(context).pushNamed(AppRoutes.placeholder, arguments: r.title);
   }
 
   @override

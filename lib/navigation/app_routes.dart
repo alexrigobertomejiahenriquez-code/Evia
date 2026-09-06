@@ -2,21 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-import '../screens/home/home_screen.dart';
+import 'app_route_names.dart';
 import '../screens/home/assistant_screen.dart';
 import '../features/shopping/presentation/pages/shopping_page.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/create/create_screen.dart';
 import '../screens/notifications/notifications_screen.dart';
-
-class AppRoutes {
-  static const String assistant = '/assistant';
-  static const String shopping = '/shopping';
-  static const String search = '/search';
-  static const String create = '/create';
-  static const String notifications = '/notifications';
-  static const String placeholder = '/placeholder';
-}
+import '../screens/home/home_screen.dart';
 
 class AppRouteGenerator {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {

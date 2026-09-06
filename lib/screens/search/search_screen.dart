@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'search_service.dart';
 import 'search_model.dart';
-import '../../navigation/app_routes.dart';
+import '../../navigation/app_route_names.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

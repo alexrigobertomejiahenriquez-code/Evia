@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'widgets/home_tile.dart';
-import '../../navigation/app_routes.dart';
+import '../../navigation/app_route_names.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -8,6 +8,7 @@ class ShoppingItem {
   final int cantidad;
   final double precioUnitario;
   final DateTime fecha;
+  final bool completado;
 
   ShoppingItem({
     required this.id,
@@ -15,6 +16,7 @@ class ShoppingItem {
     required this.cantidad,
     required this.precioUnitario,
     required this.fecha,
+    this.completado = false,
   });
 
   double get total => cantidad * precioUnitario;
@@ -25,6 +27,7 @@ class ShoppingItem {
     int? cantidad,
     double? precioUnitario,
     DateTime? fecha,
+    bool? completado,
   }) {
     return ShoppingItem(
       id: id ?? this.id,
@@ -32,6 +35,7 @@ class ShoppingItem {
       cantidad: cantidad ?? this.cantidad,
       precioUnitario: precioUnitario ?? this.precioUnitario,
       fecha: fecha ?? this.fecha,
+      completado: completado ?? this.completado,
     );
   }
 
@@ -41,6 +45,7 @@ class ShoppingItem {
         'cantidad': cantidad,
         'precioUnitario': precioUnitario,
         'fecha': fecha.toIso8601String(),
+        'completado': completado,
       };
 
   factory ShoppingItem.fromJson(Map<String, dynamic> map) {
@@ -50,12 +55,13 @@ class ShoppingItem {
       cantidad: (map['cantidad'] as num).toInt(),
       precioUnitario: (map['precioUnitario'] as num).toDouble(),
       fecha: DateTime.parse(map['fecha'] as String),
+      completado: map['completado'] as bool? ?? false,
     );
   }
 
   @override
   String toString() {
-    return 'ShoppingItem(id: $id, nombre: $nombre, cantidad: $cantidad, precioUnitario: $precioUnitario, fecha: $fecha)';
+    return 'ShoppingItem(id: $id, nombre: $nombre, cantidad: $cantidad, precioUnitario: $precioUnitario, fecha: $fecha, completado: $completado)';
   }
 
   @override

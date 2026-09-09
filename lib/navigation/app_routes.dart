@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'app_route_names.dart';
 import '../screens/home/assistant_screen.dart';
+import '../screens/home/placeholder_screen.dart';
 import '../features/shopping/presentation/pages/shopping_page.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/create/create_screen.dart';

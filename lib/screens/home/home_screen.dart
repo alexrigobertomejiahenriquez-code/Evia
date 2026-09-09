@@ -1,10 +1,8 @@
 // lib/screens/home/home_screen.dart
 
-// lib/screens/home/home_screen.dart
-
 import 'package:flutter/material.dart';
 import '../../widgets/common/app_scaffold.dart';
-import 'widgets/home_tile.dart';
+import '../../features/home/widgets/home_tile.dart';
 import '../../navigation/app_route_names.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -60,28 +58,6 @@ class HomeScreen extends StatelessWidget {
               onTap: () => _openPlaceholder(context, it['title'] as String),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class PlaceholderScreen extends StatelessWidget {
-  final String title;
-  const PlaceholderScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppScaffold(
-      title: title,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            '$title - Módulo en desarrollo',
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
         ),
       ),
     );

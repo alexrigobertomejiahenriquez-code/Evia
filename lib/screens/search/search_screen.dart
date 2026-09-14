@@ -67,6 +67,11 @@ class _SearchScreenState extends State<SearchScreen> {
       return;
     }
 
+    if (r.route == 'quote') {
+      Navigator.of(context).pushNamed(AppRoutes.quotes);
+      return;
+    }
+
     // Otherwise open PlaceholderScreen with title
     Navigator.of(context).pushNamed(AppRoutes.placeholder, arguments: r.title);
   }

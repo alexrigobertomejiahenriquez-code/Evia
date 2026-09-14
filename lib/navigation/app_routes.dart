@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'app_route_names.dart';
 import '../screens/home/assistant_screen.dart';
 import '../screens/home/placeholder_screen.dart';
+import '../features/quotes/presentation/pages/quotes_page.dart';
 import '../features/shopping/presentation/pages/shopping_page.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/create/create_screen.dart';
@@ -19,6 +20,8 @@ class AppRouteGenerator {
     switch (name) {
       case AppRoutes.assistant:
         return MaterialPageRoute(builder: (_) => const AssistantScreen());
+      case AppRoutes.quotes:
+        return MaterialPageRoute(builder: (_) => const QuotesPage());
       case AppRoutes.shopping:
         return MaterialPageRoute(builder: (_) => const ShoppingPage());
       case AppRoutes.search:

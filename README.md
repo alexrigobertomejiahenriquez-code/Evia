@@ -83,14 +83,14 @@ Base modular preparada para crear planos, esquemas y dibujos:
 *Nota:* No incluye editor CAD completo en V1, pero la arquitectura está preparada para crecimiento futuro
 
 ### 5. 💰 Cotizar - Generador de Cotizaciones
-**Estado:** ⏳ Estructura preparada (placeholder)
+**Estado:** ✅ Implementado en V1
 
 Crear cotizaciones profesionales:
 - Agregar productos, materiales y servicios
 - Cantidades y precios unitarios
 - Subtotales y totales automáticos
 - Presupuesto y descuentos
-- Exportación profesional de cotizaciones
+- Vista previa exportable y copia rápida del resumen
 
 ### 6. 📅 Agenda - Calendario y Tareas
 **Estado:** ⏳ Estructura preparada (placeholder)
@@ -322,7 +322,7 @@ Todas las pantallas placeholder están creadas y funcionales, listas para desarr
 - [ ] Módulo eBook - Documentación personalizable
 - [ ] Módulo Proyectos - Gestión de proyectos
 - [ ] Módulo Planos - Diseño de planos y esquemas
-- [ ] Módulo Cotizar - Generador de cotizaciones
+- [x] Módulo Cotizar - Generador de cotizaciones
 - [ ] Módulo Agenda - Calendario y tareas
 - [ ] Módulo Documentos - Documentos por profesión
 - [ ] Módulo Herramientas - Utilidades especializadas

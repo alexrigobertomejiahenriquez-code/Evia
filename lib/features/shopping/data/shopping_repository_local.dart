@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../domain/models/shopping_item.dart';
-import '../../domain/repositories/shopping_repository.dart';
+import '../domain/models/shopping_item.dart';
+import '../domain/repositories/shopping_repository.dart';
 
 class ShoppingRepositoryLocal implements ShoppingRepository {
   static const _itemsKey = 'shopping_items';

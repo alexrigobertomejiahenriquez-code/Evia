@@ -8,6 +8,9 @@ on:
       - copilot/featurecotizaciones
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   analyze_test_build:
     runs-on: ubuntu-latest

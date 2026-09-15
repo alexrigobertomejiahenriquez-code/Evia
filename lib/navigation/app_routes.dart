@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../features/agenda/presentation/pages/agenda_screen.dart';
 import 'app_route_names.dart';
 import '../screens/home/assistant_screen.dart';
 import '../screens/home/placeholder_screen.dart';
@@ -20,6 +21,8 @@ class AppRouteGenerator {
     switch (name) {
       case AppRoutes.assistant:
         return MaterialPageRoute(builder: (_) => const AssistantScreen());
+      case AppRoutes.agenda:
+        return MaterialPageRoute(builder: (_) => const AgendaScreen());
       case AppRoutes.shopping:
         return MaterialPageRoute(builder: (_) => const ShoppingPage());
       case AppRoutes.search:

@@ -1,6 +1,8 @@
 // lib/screens/search/search_screen.dart
 
 import 'package:flutter/material.dart';
+import '../../features/agenda/data/agenda_repository_local.dart';
+import '../../features/agenda/domain/repositories/agenda_repository.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'search_service.dart';
 import 'search_model.dart';
@@ -16,6 +18,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _ctrl = TextEditingController();
   final MockSearchService _service = MockSearchService();
+  final AgendaRepository _agendaRepository = AgendaRepositoryLocal();
   List<SearchResult> _results = [];
   bool _loading = false;
 
@@ -37,9 +40,22 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _loading = true;
     });
-    final res = await _service.query(query);
+    final staticResults = await _service.query(query);
+    final agendaEvents = await _agendaRepository.searchEvents(query);
+    final agendaResults = agendaEvents
+        .map(
+          (event) => SearchResult(
+            title: event.title,
+            subtitle: event.description.isEmpty
+                ? 'Agenda • ${event.type.label}'
+                : event.description,
+            category: 'Agenda',
+            route: 'agenda',
+          ),
+        )
+        .toList();
     setState(() {
-      _results = res;
+      _results = [...staticResults, ...agendaResults];
       _loading = false;
     });
   }
@@ -68,6 +84,10 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     if (r.route == 'quote') {
       Navigator.of(context).pushNamed(AppRoutes.quotes);
+      return;
+    }
+    if (r.route == 'agenda') {
+      Navigator.of(context).pushNamed(AppRoutes.agenda);
       return;
     }
 

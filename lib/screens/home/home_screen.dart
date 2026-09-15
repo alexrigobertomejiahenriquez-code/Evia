@@ -26,6 +26,11 @@ class HomeScreen extends StatelessWidget {
       return;
     }
 
+    if (title == 'Agenda') {
+      Navigator.of(context).pushNamed(AppRoutes.agenda);
+      return;
+    }
+
     Navigator.of(context).pushNamed(AppRoutes.placeholder, arguments: title);
   }
 

@@ -2,6 +2,7 @@
 
 class AppRoutes {
   static const String assistant = '/assistant';
+  static const String agenda = '/agenda';
   static const String shopping = '/shopping';
   static const String search = '/search';
   static const String create = '/create';

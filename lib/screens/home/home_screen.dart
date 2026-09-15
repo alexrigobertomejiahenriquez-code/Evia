@@ -21,6 +21,11 @@ class HomeScreen extends StatelessWidget {
       return;
     }
 
+    if (title == 'Cotizar') {
+      Navigator.of(context).pushNamed(AppRoutes.quotes);
+      return;
+    }
+
     Navigator.of(context).pushNamed(AppRoutes.placeholder, arguments: title);
   }
 

@@ -10,6 +10,7 @@ import '../screens/search/search_screen.dart';
 import '../screens/create/create_screen.dart';
 import '../screens/notifications/notifications_screen.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/quotes/quotes_screen.dart';
 
 class AppRouteGenerator {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -27,6 +28,8 @@ class AppRouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateScreen());
       case AppRoutes.notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+      case AppRoutes.quotes:
+        return MaterialPageRoute(builder: (_) => const QuotesScreen());
       case AppRoutes.placeholder:
         String title = '';
         if (args is String) {

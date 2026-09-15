@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'voice_service.dart';
+import '../voice/voice_service.dart';
 
 class MockVoiceService implements VoiceService {
   bool _recording = false;

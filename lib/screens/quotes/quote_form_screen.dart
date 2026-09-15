@@ -39,18 +39,31 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
 
     _titleCtrl = TextEditingController(text: quote?.title ?? '');
     _clientCtrl = TextEditingController(text: quote?.client ?? '');
-    _descriptionCtrl = TextEditingController(text: quote?.workDescription ?? '');
+    _descriptionCtrl =
+        TextEditingController(text: quote?.workDescription ?? '');
     _laborCtrl = TextEditingController(text: _toInput(quote?.laborCost ?? 0));
-    _otherCostsCtrl = TextEditingController(text: _toInput(quote?.otherCosts ?? 0));
+    _otherCostsCtrl =
+        TextEditingController(text: _toInput(quote?.otherCosts ?? 0));
     _discountCtrl = TextEditingController(text: _toInput(quote?.discount ?? 0));
     _taxCtrl = TextEditingController(text: _toInput(quote?.taxPercent ?? 0));
-    _budgetCtrl = TextEditingController(text: quote?.targetBudget == null ? '' : _toInput(quote!.targetBudget!));
+    _budgetCtrl = TextEditingController(
+        text:
+            quote?.targetBudget == null ? '' : _toInput(quote!.targetBudget!));
 
     _date = quote?.date ?? DateTime.now();
     _items = List<QuoteItem>.from(quote?.items ?? const []);
     _selectedProjectId = quote?.projectId;
 
-    for (final controller in [_titleCtrl, _clientCtrl, _descriptionCtrl, _laborCtrl, _otherCostsCtrl, _discountCtrl, _taxCtrl, _budgetCtrl]) {
+    for (final controller in [
+      _titleCtrl,
+      _clientCtrl,
+      _descriptionCtrl,
+      _laborCtrl,
+      _otherCostsCtrl,
+      _discountCtrl,
+      _taxCtrl,
+      _budgetCtrl
+    ]) {
       controller.addListener(_onInputChanged);
     }
 
@@ -67,7 +80,8 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
     if (!mounted) return;
     setState(() {
       _projects = projects;
-      if (_selectedProjectId != null && !_projects.any((p) => p.id == _selectedProjectId)) {
+      if (_selectedProjectId != null &&
+          !_projects.any((p) => p.id == _selectedProjectId)) {
         _selectedProjectId = null;
       }
     });
@@ -75,7 +89,16 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
 
   @override
   void dispose() {
-    for (final controller in [_titleCtrl, _clientCtrl, _descriptionCtrl, _laborCtrl, _otherCostsCtrl, _discountCtrl, _taxCtrl, _budgetCtrl]) {
+    for (final controller in [
+      _titleCtrl,
+      _clientCtrl,
+      _descriptionCtrl,
+      _laborCtrl,
+      _otherCostsCtrl,
+      _discountCtrl,
+      _taxCtrl,
+      _budgetCtrl
+    ]) {
       controller.removeListener(_onInputChanged);
       controller.dispose();
     }
@@ -96,10 +119,13 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
   }
 
   Future<void> _addOrEditItem({QuoteItem? item}) async {
-    final descriptionCtrl = TextEditingController(text: item?.description ?? '');
-    final quantityCtrl = TextEditingController(text: _toInput(item?.quantity ?? 1));
+    final descriptionCtrl =
+        TextEditingController(text: item?.description ?? '');
+    final quantityCtrl =
+        TextEditingController(text: _toInput(item?.quantity ?? 1));
     final unitCtrl = TextEditingController(text: item?.unit ?? 'und');
-    final unitPriceCtrl = TextEditingController(text: _toInput(item?.unitPrice ?? 0));
+    final unitPriceCtrl =
+        TextEditingController(text: _toInput(item?.unitPrice ?? 0));
 
     final result = await showDialog<QuoteItem>(
       context: context,
@@ -116,7 +142,8 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
               const SizedBox(height: 8),
               TextField(
                 controller: quantityCtrl,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(labelText: 'Cantidad'),
               ),
               const SizedBox(height: 8),
@@ -127,14 +154,17 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
               const SizedBox(height: 8),
               TextField(
                 controller: unitPriceCtrl,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(labelText: 'Precio unitario'),
               ),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancelar')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancelar')),
           ElevatedButton(
             onPressed: () {
               final description = descriptionCtrl.text.trim();
@@ -147,7 +177,8 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
               }
 
               final edited = QuoteItem(
-                id: item?.id ?? DateTime.now().microsecondsSinceEpoch.toString(),
+                id: item?.id ??
+                    DateTime.now().microsecondsSinceEpoch.toString(),
                 description: description,
                 quantity: quantity,
                 unit: unit.isEmpty ? 'und' : unit,
@@ -203,7 +234,9 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
       otherCosts: _parseNumber(_otherCostsCtrl.text),
       discount: _parseNumber(_discountCtrl.text),
       taxPercent: _parseNumber(_taxCtrl.text),
-      targetBudget: _budgetCtrl.text.trim().isEmpty ? null : _parseNumber(_budgetCtrl.text),
+      targetBudget: _budgetCtrl.text.trim().isEmpty
+          ? null
+          : _parseNumber(_budgetCtrl.text),
       projectId: _selectedProjectId,
       projectName: project?.name,
     );
@@ -219,7 +252,10 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
     return AppScaffold(
       title: widget.quote == null ? 'Nueva cotización' : 'Editar cotización',
       actions: [
-        IconButton(onPressed: _saveQuote, icon: const Icon(Icons.check), tooltip: 'Guardar'),
+        IconButton(
+            onPressed: _saveQuote,
+            icon: const Icon(Icons.check),
+            tooltip: 'Guardar'),
       ],
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -239,19 +275,23 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
             TextField(
               controller: _descriptionCtrl,
               maxLines: 3,
-              decoration: const InputDecoration(labelText: 'Descripción del trabajo'),
+              decoration:
+                  const InputDecoration(labelText: 'Descripción del trabajo'),
             ),
             const SizedBox(height: 12),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text('Fecha: ${_formatDate(_date)}'),
-              trailing: TextButton(onPressed: _selectDate, child: const Text('Seleccionar')),
+              trailing: TextButton(
+                  onPressed: _selectDate, child: const Text('Seleccionar')),
             ),
             DropdownButtonFormField<String?>(
-              value: _selectedProjectId,
-              decoration: const InputDecoration(labelText: 'Proyecto (opcional)'),
+              initialValue: _selectedProjectId,
+              decoration:
+                  const InputDecoration(labelText: 'Proyecto (opcional)'),
               items: [
-                const DropdownMenuItem<String?>(value: null, child: Text('Sin proyecto')),
+                const DropdownMenuItem<String?>(
+                    value: null, child: Text('Sin proyecto')),
                 ..._projects.map<DropdownMenuItem<String?>>(
                   (project) => DropdownMenuItem<String?>(
                     value: project.id,
@@ -264,7 +304,9 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
             const SizedBox(height: 20),
             Row(
               children: [
-                Expanded(child: Text('Materiales / productos', style: Theme.of(context).textTheme.titleMedium)),
+                Expanded(
+                    child: Text('Materiales / productos',
+                        style: Theme.of(context).textTheme.titleMedium)),
                 TextButton.icon(
                   onPressed: () => _addOrEditItem(),
                   icon: const Icon(Icons.add),
@@ -280,32 +322,38 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
             const SizedBox(height: 20),
             TextField(
               controller: _laborCtrl,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Mano de obra'),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _otherCostsCtrl,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Otros costos'),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _discountCtrl,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Descuento'),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _taxCtrl,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Impuesto (%)'),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _budgetCtrl,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(labelText: 'Presupuesto objetivo (opcional)'),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(
+                  labelText: 'Presupuesto objetivo (opcional)'),
             ),
             const SizedBox(height: 20),
             _buildSummaryCard(totals),
@@ -326,19 +374,29 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
 
   Widget _buildItemCard(QuoteItem item) {
     final lineTotal = QuoteCalculator.fromCents(
-      ((item.quantity * 1000).round() * QuoteCalculator.toCents(item.unitPrice) / 1000).round(),
+      ((item.quantity * 1000).round() *
+              QuoteCalculator.toCents(item.unitPrice) /
+              1000)
+          .round(),
     );
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         title: Text(item.description),
-        subtitle: Text('${item.quantity} ${item.unit} x ${_currency(item.unitPrice)} = ${_currency(lineTotal)}'),
+        subtitle: Text(
+            '${item.quantity} ${item.unit} x ${_currency(item.unitPrice)} = ${_currency(lineTotal)}'),
         trailing: Wrap(
           spacing: 8,
           children: [
-            IconButton(onPressed: () => _addOrEditItem(item: item), icon: const Icon(Icons.edit), tooltip: 'Editar'),
-            IconButton(onPressed: () => _removeItem(item.id), icon: const Icon(Icons.delete), tooltip: 'Eliminar'),
+            IconButton(
+                onPressed: () => _addOrEditItem(item: item),
+                icon: const Icon(Icons.edit),
+                tooltip: 'Editar'),
+            IconButton(
+                onPressed: () => _removeItem(item.id),
+                icon: const Icon(Icons.delete),
+                tooltip: 'Eliminar'),
           ],
         ),
       ),
@@ -371,7 +429,8 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
           children: [
             Text('Resumen', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
-            _summaryLine('Subtotal materiales', _currency(totals.itemsSubtotal)),
+            _summaryLine(
+                'Subtotal materiales', _currency(totals.itemsSubtotal)),
             _summaryLine('Mano de obra', _currency(totals.laborCost)),
             _summaryLine('Otros costos', _currency(totals.otherCosts)),
             _summaryLine('Descuento', '-${_currency(totals.discount)}'),
@@ -379,11 +438,19 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
             const Divider(),
             _summaryLine('Total', _currency(totals.total), isBold: true),
             const SizedBox(height: 8),
-            _summaryLine('Presupuesto objetivo', totals.targetBudget == null ? 'No definido' : _currency(totals.targetBudget!)),
-            _summaryLine('Diferencia', diff == null ? '—' : _currency(diff.abs())),
+            _summaryLine(
+                'Presupuesto objetivo',
+                totals.targetBudget == null
+                    ? 'No definido'
+                    : _currency(totals.targetBudget!)),
+            _summaryLine(
+                'Diferencia', diff == null ? '—' : _currency(diff.abs())),
             Text(
               'Estado: ${totals.budgetStatusLabel}',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: statusColor, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: statusColor, fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -417,7 +484,9 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
       otherCosts: _parseNumber(_otherCostsCtrl.text),
       discount: _parseNumber(_discountCtrl.text),
       taxPercent: _parseNumber(_taxCtrl.text),
-      targetBudget: _budgetCtrl.text.trim().isEmpty ? null : _parseNumber(_budgetCtrl.text),
+      targetBudget: _budgetCtrl.text.trim().isEmpty
+          ? null
+          : _parseNumber(_budgetCtrl.text),
       projectId: _selectedProjectId,
       projectName: project?.name,
     );
@@ -435,7 +504,8 @@ class _QuoteFormScreenState extends State<QuoteFormScreen> {
     return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 2);
   }
 
-  String _formatDate(DateTime value) => '${value.day.toString().padLeft(2, '0')}/${value.month.toString().padLeft(2, '0')}/${value.year}';
+  String _formatDate(DateTime value) =>
+      '${value.day.toString().padLeft(2, '0')}/${value.month.toString().padLeft(2, '0')}/${value.year}';
 
   String _currency(double value) => '\$${value.toStringAsFixed(2)}';
 

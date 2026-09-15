@@ -43,8 +43,12 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
     final event = widget.event;
     final nowTime = TimeOfDay.now();
     _selectedDate = event?.date ?? AgendaEvent.normalizeDate(DateTime.now());
-    _startTime = event == null ? TimeOfDay(hour: nowTime.hour, minute: 0) : _timeOfDayFromMinutes(event.startMinutes);
-    _endTime = event?.endMinutes == null ? null : _timeOfDayFromMinutes(event!.endMinutes!);
+    _startTime = event == null
+        ? TimeOfDay(hour: nowTime.hour, minute: 0)
+        : _timeOfDayFromMinutes(event.startMinutes);
+    _endTime = event?.endMinutes == null
+        ? null
+        : _timeOfDayFromMinutes(event!.endMinutes!);
     _allDay = event?.allDay ?? false;
     _type = event?.type ?? AgendaEventType.event;
     _status = event?.status ?? AgendaEventStatus.pending;
@@ -114,7 +118,8 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
   Future<void> _pickEndTime() async {
     final picked = await showTimePicker(
       context: context,
-      initialTime: _endTime ?? _startTime ?? const TimeOfDay(hour: 9, minute: 0),
+      initialTime:
+          _endTime ?? _startTime ?? const TimeOfDay(hour: 9, minute: 0),
     );
     if (picked != null) {
       setState(() => _endTime = picked);
@@ -139,7 +144,13 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
     if (time == null) return;
 
     setState(() {
-      _customReminderDateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+      _customReminderDateTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        time.hour,
+        time.minute,
+      );
     });
   }
 
@@ -153,7 +164,8 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
     }
 
     final startMinutes = _allDay ? 0 : _toMinutes(_startTime!);
-    final endMinutes = _allDay || _endTime == null ? null : _toMinutes(_endTime!);
+    final endMinutes =
+        _allDay || _endTime == null ? null : _toMinutes(_endTime!);
     if (!_allDay && endMinutes != null && endMinutes < startMinutes) {
       _showError('La hora final no puede ser anterior a la hora inicial.');
       return;
@@ -161,13 +173,18 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
 
     AgendaReminder? reminder;
     if (_reminderPreset != null) {
-      if (_reminderPreset == AgendaReminderPreset.custom && _customReminderDateTime == null) {
-        _showError('Selecciona la fecha y hora del recordatorio personalizado.');
+      if (_reminderPreset == AgendaReminderPreset.custom &&
+          _customReminderDateTime == null) {
+        _showError(
+          'Selecciona la fecha y hora del recordatorio personalizado.',
+        );
         return;
       }
       reminder = AgendaReminder(
         preset: _reminderPreset!,
-        customTriggerAt: _reminderPreset == AgendaReminderPreset.custom ? _customReminderDateTime : null,
+        customTriggerAt: _reminderPreset == AgendaReminderPreset.custom
+            ? _customReminderDateTime
+            : null,
       );
     }
 
@@ -182,8 +199,11 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
         endMinutes: endMinutes,
         allDay: _allDay,
         type: _type,
-        location: _locationController.text.trim().isEmpty ? null : _locationController.text.trim(),
-        status: _type == AgendaEventType.task ? _status : AgendaEventStatus.pending,
+        location: _locationController.text.trim().isEmpty
+            ? null
+            : _locationController.text.trim(),
+        status:
+            _type == AgendaEventType.task ? _status : AgendaEventStatus.pending,
         notes: _notesController.text,
         createdAt: widget.event?.createdAt ?? now,
         updatedAt: now,
@@ -191,7 +211,9 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
         relations: AgendaRelations(
           projectId: _selectedProjectId,
           projectName: _selectedProjectName,
-          clientName: _clientController.text.trim().isEmpty ? null : _clientController.text.trim(),
+          clientName: _clientController.text.trim().isEmpty
+              ? null
+              : _clientController.text.trim(),
         ),
       );
       Navigator.of(context).pop(event);
@@ -206,9 +228,7 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
 
     return AppScaffold(
       title: isEditing ? 'Editar agenda' : 'Nuevo en agenda',
-      actions: [
-        TextButton(onPressed: _save, child: const Text('Guardar')),
-      ],
+      actions: [TextButton(onPressed: _save, child: const Text('Guardar'))],
       child: Form(
         key: _formKey,
         child: ListView(
@@ -221,14 +241,19 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
                 labelText: 'Título *',
                 hintText: 'Ej. Reunión con cliente',
               ),
-              validator: (value) => (value == null || value.trim().isEmpty) ? 'El título es obligatorio.' : null,
+              validator: (value) => (value == null || value.trim().isEmpty)
+                  ? 'El título es obligatorio.'
+                  : null,
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<AgendaEventType>(
-              value: _type,
+              initialValue: _type,
               decoration: const InputDecoration(labelText: 'Categoría'),
               items: AgendaEventType.values
-                  .map((type) => DropdownMenuItem(value: type, child: Text(type.label)))
+                  .map(
+                    (type) =>
+                        DropdownMenuItem(value: type, child: Text(type.label)),
+                  )
                   .toList(),
               onChanged: (value) {
                 if (value == null) return;
@@ -270,22 +295,32 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Hora de inicio'),
-                subtitle: Text(_startTime == null ? 'Seleccionar' : _startTime!.format(context)),
+                subtitle: Text(
+                  _startTime == null
+                      ? 'Seleccionar'
+                      : _startTime!.format(context),
+                ),
                 trailing: const Icon(Icons.access_time),
                 onTap: _pickStartTime,
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Hora final (opcional)'),
-                subtitle: Text(_endTime == null ? 'Sin hora final' : _endTime!.format(context)),
+                subtitle: Text(
+                  _endTime == null
+                      ? 'Sin hora final'
+                      : _endTime!.format(context),
+                ),
                 trailing: const Icon(Icons.schedule),
                 onTap: _pickEndTime,
               ),
             ],
             if (_type == AgendaEventType.task)
               DropdownButtonFormField<AgendaEventStatus>(
-                value: _status,
-                decoration: const InputDecoration(labelText: 'Estado de la tarea'),
+                initialValue: _status,
+                decoration: const InputDecoration(
+                  labelText: 'Estado de la tarea',
+                ),
                 items: const [
                   DropdownMenuItem(
                     value: AgendaEventStatus.pending,
@@ -310,10 +345,13 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<AgendaReminderPreset?>(
-              value: _reminderPreset,
+              initialValue: _reminderPreset,
               decoration: const InputDecoration(labelText: 'Recordatorio'),
               items: [
-                const DropdownMenuItem<AgendaReminderPreset?>(value: null, child: Text('Sin recordatorio')),
+                const DropdownMenuItem<AgendaReminderPreset?>(
+                  value: null,
+                  child: Text('Sin recordatorio'),
+                ),
                 ...AgendaReminderPreset.values.map(
                   (preset) => DropdownMenuItem<AgendaReminderPreset?>(
                     value: preset,
@@ -353,10 +391,15 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
               const Center(child: CircularProgressIndicator())
             else
               DropdownButtonFormField<String?>(
-                value: _selectedProjectId,
-                decoration: const InputDecoration(labelText: 'Proyecto relacionado'),
+                initialValue: _selectedProjectId,
+                decoration: const InputDecoration(
+                  labelText: 'Proyecto relacionado',
+                ),
                 items: [
-                  const DropdownMenuItem<String?>(value: null, child: Text('Sin proyecto')),
+                  const DropdownMenuItem<String?>(
+                    value: null,
+                    child: Text('Sin proyecto'),
+                  ),
                   ..._projects.map(
                     (project) => DropdownMenuItem<String?>(
                       value: project.id,
@@ -365,7 +408,8 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
                   ),
                 ],
                 onChanged: (value) {
-                  final project = _projects.where((item) => item.id == value).firstOrNull;
+                  final project =
+                      _projects.where((item) => item.id == value).firstOrNull;
                   setState(() {
                     _selectedProjectId = value;
                     _selectedProjectName = project?.name;
@@ -376,7 +420,9 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
             TextFormField(
               controller: _clientController,
               textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: 'Cliente relacionado'),
+              decoration: const InputDecoration(
+                labelText: 'Cliente relacionado',
+              ),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -398,10 +444,13 @@ class _AgendaEventFormScreenState extends State<AgendaEventFormScreen> {
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  TimeOfDay _timeOfDayFromMinutes(int value) => TimeOfDay(hour: value ~/ 60, minute: value % 60);
+  TimeOfDay _timeOfDayFromMinutes(int value) =>
+      TimeOfDay(hour: value ~/ 60, minute: value % 60);
 
   int _toMinutes(TimeOfDay value) => value.hour * 60 + value.minute;
 

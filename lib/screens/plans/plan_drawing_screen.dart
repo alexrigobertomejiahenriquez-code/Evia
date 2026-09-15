@@ -29,7 +29,10 @@ class _PlanDrawingScreenState extends State<PlanDrawingScreen> {
     _lines = List.from(widget.drawing.lines);
     _spaces = Map.from(widget.drawing.spaces);
     _measurements = Map.from(widget.drawing.measurements);
-    _nextSpaceNumber = (_spaces.keys.isEmpty ? 0 : _spaces.keys.reduce((a, b) => a > b ? a : b)) + 1;
+    _nextSpaceNumber = (_spaces.keys.isEmpty
+            ? 0
+            : _spaces.keys.reduce((a, b) => a > b ? a : b)) +
+        1;
   }
 
   @override
@@ -104,7 +107,8 @@ class _PlanDrawingScreenState extends State<PlanDrawingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Espacios y Medidas', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Text('Espacios y Medidas',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                     ElevatedButton.icon(
                       onPressed: _addSpaceAnnotation,
                       icon: const Icon(Icons.add),
@@ -140,7 +144,9 @@ class _PlanDrawingScreenState extends State<PlanDrawingScreen> {
                     ),
                   )
                 else
-                  const Text('Sin espacios definidos', style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
+                  const Text('Sin espacios definidos',
+                      style:
+                          TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
               ],
             ),
           ),

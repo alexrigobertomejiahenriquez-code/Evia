@@ -6,7 +6,7 @@ import 'app_typography.dart';
 /// Gestor centralizado de temas para EVIA
 class AppTheme extends ChangeNotifier {
   static const String _themeKey = 'app_theme_mode';
-  
+
   ThemeMode _themeMode = ThemeMode.system;
 
   AppTheme() {
@@ -21,7 +21,7 @@ class AppTheme extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedTheme = prefs.getString(_themeKey) ?? 'system';
-      
+
       _themeMode = switch (savedTheme) {
         'light' => ThemeMode.light,
         'dark' => ThemeMode.dark,
@@ -36,7 +36,7 @@ class AppTheme extends ChangeNotifier {
 
   Future<void> setThemeMode(ThemeMode mode) async {
     _themeMode = mode;
-    
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final themeName = switch (mode) {
@@ -48,7 +48,7 @@ class AppTheme extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error guardando preferencia de tema: $e');
     }
-    
+
     notifyListeners();
   }
 
@@ -76,11 +76,9 @@ class AppTheme extends ChangeNotifier {
         onErrorContainer: const Color(0xFF410E0B),
         outline: AppColors.lightOutline,
         outlineVariant: AppColors.lightOutlineVariant,
-        background: AppColors.lightBackground,
-        onBackground: AppColors.lightOnBackground,
         surface: AppColors.lightSurface,
         onSurface: AppColors.lightOnSurface,
-        surfaceVariant: const Color(0xFFEAE1EC),
+        surfaceContainerHighest: const Color(0xFFEAE1EC),
         onSurfaceVariant: const Color(0xFF49454E),
         scrim: AppColors.lightScrim,
       ),
@@ -90,15 +88,18 @@ class AppTheme extends ChangeNotifier {
         backgroundColor: AppColors.lightBackground,
         foregroundColor: AppColors.lightOnBackground,
         centerTitle: false,
-        titleTextStyle: AppTypography.buildTextTheme(Brightness.light).titleLarge,
+        titleTextStyle:
+            AppTypography.buildTextTheme(Brightness.light).titleLarge,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.lightSurface,
         elevation: 8,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.grey500,
-        selectedLabelStyle: AppTypography.buildTextTheme(Brightness.light).labelSmall,
-        unselectedLabelStyle: AppTypography.buildTextTheme(Brightness.light).labelSmall,
+        selectedLabelStyle:
+            AppTypography.buildTextTheme(Brightness.light).labelSmall,
+        unselectedLabelStyle:
+            AppTypography.buildTextTheme(Brightness.light).labelSmall,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: AppColors.primary,
@@ -134,7 +135,7 @@ class AppTheme extends ChangeNotifier {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.lightSurface,
         elevation: 1,
         shape: RoundedRectangleBorder(
@@ -156,7 +157,8 @@ class AppTheme extends ChangeNotifier {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       scaffoldBackgroundColor: AppColors.lightBackground,
       dividerColor: AppColors.lightOutlineVariant,
@@ -187,11 +189,9 @@ class AppTheme extends ChangeNotifier {
         onErrorContainer: const Color(0xFFF9DEDC),
         outline: AppColors.darkOutline,
         outlineVariant: AppColors.darkOutlineVariant,
-        background: AppColors.darkBackground,
-        onBackground: AppColors.darkOnBackground,
         surface: AppColors.darkSurface,
         onSurface: AppColors.darkOnSurface,
-        surfaceVariant: const Color(0xFF49454E),
+        surfaceContainerHighest: const Color(0xFF49454E),
         onSurfaceVariant: const Color(0xFFCAC7D0),
         scrim: AppColors.darkScrim,
       ),
@@ -201,15 +201,18 @@ class AppTheme extends ChangeNotifier {
         backgroundColor: AppColors.darkBackground,
         foregroundColor: AppColors.darkOnBackground,
         centerTitle: false,
-        titleTextStyle: AppTypography.buildTextTheme(Brightness.dark).titleLarge,
+        titleTextStyle:
+            AppTypography.buildTextTheme(Brightness.dark).titleLarge,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.darkSurface,
         elevation: 8,
         selectedItemColor: AppColors.primaryLight,
         unselectedItemColor: AppColors.grey400,
-        selectedLabelStyle: AppTypography.buildTextTheme(Brightness.dark).labelSmall,
-        unselectedLabelStyle: AppTypography.buildTextTheme(Brightness.dark).labelSmall,
+        selectedLabelStyle:
+            AppTypography.buildTextTheme(Brightness.dark).labelSmall,
+        unselectedLabelStyle:
+            AppTypography.buildTextTheme(Brightness.dark).labelSmall,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: AppColors.primaryLight,
@@ -245,7 +248,7 @@ class AppTheme extends ChangeNotifier {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.darkSurface,
         elevation: 1,
         shape: RoundedRectangleBorder(
@@ -267,7 +270,8 @@ class AppTheme extends ChangeNotifier {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.primaryLight, width: 2),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       scaffoldBackgroundColor: AppColors.darkBackground,
       dividerColor: AppColors.darkOutlineVariant,

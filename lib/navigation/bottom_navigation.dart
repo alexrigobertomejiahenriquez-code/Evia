@@ -46,7 +46,8 @@ class _MainNavigationState extends State<MainNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Buscar'),
           BottomNavigationBarItem(icon: Icon(Icons.add_box), label: 'Crear'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Avisos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: 'Avisos'),
           BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'Más'),
         ],
       ),

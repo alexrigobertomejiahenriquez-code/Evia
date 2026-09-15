@@ -20,7 +20,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
   final List<ChatMessage> _messages = [];
   final TextEditingController _ctrl = TextEditingController();
   final ScrollController _scrollCtrl = ScrollController();
-  final IaService _ia = MockIaService(); // Mantener MockIaService como implementación actual.
+  final IaService _ia =
+      MockIaService(); // Mantener MockIaService como implementación actual.
   bool _loading = false;
 
   @override
@@ -48,7 +49,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
       _scrollToEnd();
     } catch (e) {
       setState(() {
-        _messages.add(ChatMessage(text: 'Error al obtener respuesta: $e', fromUser: false));
+        _messages.add(ChatMessage(
+            text: 'Error al obtener respuesta: $e', fromUser: false));
       });
       _scrollToEnd();
     } finally {
@@ -78,12 +80,19 @@ class _AssistantScreenState extends State<AssistantScreen> {
   }
 
   Widget _buildMessageBubble(ChatMessage msg) {
-    final alignment = msg.fromUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    final alignment =
+        msg.fromUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final bgColor = msg.fromUser ? Colors.blue.shade700 : Colors.grey.shade200;
     final textColor = msg.fromUser ? Colors.white : Colors.black87;
     final radius = msg.fromUser
-        ? const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12), bottomLeft: Radius.circular(12))
-        : const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12), bottomRight: Radius.circular(12));
+        ? const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+            bottomLeft: Radius.circular(12))
+        : const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+            bottomRight: Radius.circular(12));
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
@@ -134,7 +143,9 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     itemBuilder: (context, index) {
                       final msg = _messages[index];
                       return Align(
-                        alignment: msg.fromUser ? Alignment.centerRight : Alignment.centerLeft,
+                        alignment: msg.fromUser
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
                         child: _buildMessageBubble(msg),
                       );
                     },
@@ -159,7 +170,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
           SafeArea(
             top: false,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
               child: Row(
                 children: [
                   Expanded(
@@ -172,7 +184,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
                       decoration: const InputDecoration(
                         hintText: 'Escribe un mensaje...',
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                       ),
                     ),
                   ),

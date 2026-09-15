@@ -66,7 +66,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
           event: event,
           onSave: (previousEvent, updated) async {
             await _repository.saveEvent(updated);
-            await _reminderService.syncEvent(updated, previousEvent: previousEvent);
+            await _reminderService.syncEvent(
+              updated,
+              previousEvent: previousEvent,
+            );
             await _loadEvents();
           },
           onDelete: (target) async {
@@ -75,7 +78,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
             await _loadEvents();
           },
           onToggleTask: (target, completed) async {
-            final updated = target.markTaskCompleted(completed, updatedAt: DateTime.now());
+            final updated = target.markTaskCompleted(
+              completed,
+              updatedAt: DateTime.now(),
+            );
             await _repository.saveEvent(updated);
             await _reminderService.syncEvent(updated, previousEvent: target);
             await _loadEvents();
@@ -89,7 +95,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
   }
 
   Future<void> _toggleTask(AgendaEvent event) async {
-    final updated = event.markTaskCompleted(!event.isCompleted, updatedAt: DateTime.now());
+    final updated = event.markTaskCompleted(
+      !event.isCompleted,
+      updatedAt: DateTime.now(),
+    );
     await _repository.saveEvent(updated);
     await _reminderService.syncEvent(updated, previousEvent: event);
     await _loadEvents();
@@ -110,12 +119,28 @@ class _AgendaScreenState extends State<AgendaScreen> {
   @override
   Widget build(BuildContext context) {
     final today = AgendaEvent.normalizeDate(DateTime.now());
-    final selected = _events.where((event) => event.occursOn(_selectedDate)).toList();
-    final todayEvents = _events.where((event) => event.occursOn(today)).toList();
-    final upcoming = _events.where((event) => event.startDateTime.isAfter(today.add(const Duration(days: 1)).subtract(const Duration(milliseconds: 1)))).toList();
-    final previous = _events.where((event) => event.startDateTime.isBefore(today)).toList().reversed.toList();
-    final pendingTasks = _events.where((event) => event.isTask && !event.isCompleted).toList();
-    final completedTasks = _events.where((event) => event.isTask && event.isCompleted).toList();
+    final selected =
+        _events.where((event) => event.occursOn(_selectedDate)).toList();
+    final todayEvents =
+        _events.where((event) => event.occursOn(today)).toList();
+    final upcoming = _events
+        .where(
+          (event) => event.startDateTime.isAfter(
+            today
+                .add(const Duration(days: 1))
+                .subtract(const Duration(milliseconds: 1)),
+          ),
+        )
+        .toList();
+    final previous = _events
+        .where((event) => event.startDateTime.isBefore(today))
+        .toList()
+        .reversed
+        .toList();
+    final pendingTasks =
+        _events.where((event) => event.isTask && !event.isCompleted).toList();
+    final completedTasks =
+        _events.where((event) => event.isTask && event.isCompleted).toList();
 
     return AppScaffold(
       title: 'Agenda',
@@ -171,9 +196,16 @@ class _AgendaScreenState extends State<AgendaScreen> {
       padding: const EdgeInsets.only(top: 48),
       child: Column(
         children: [
-          Icon(Icons.calendar_month_outlined, size: 72, color: Theme.of(context).colorScheme.outline),
+          Icon(
+            Icons.calendar_month_outlined,
+            size: 72,
+            color: Theme.of(context).colorScheme.outline,
+          ),
           const SizedBox(height: 16),
-          Text('Aún no hay elementos en tu agenda.', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Aún no hay elementos en tu agenda.',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 8),
           Text(
             'Crea eventos, tareas, recordatorios, citas o clases y mantén tus avisos sincronizados.',
@@ -201,7 +233,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
         if (items.isEmpty)
           Card(
             child: ListTile(
-              title: Text('Sin elementos', style: Theme.of(context).textTheme.bodyLarge),
+              title: Text(
+                'Sin elementos',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
           )
         else

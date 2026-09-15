@@ -30,9 +30,24 @@ void main() {
 
   test('guardar y cargar eventos preserva orden y misma fecha', () async {
     final repository = AgendaRepositoryLocal();
-    final first = buildEvent('1', date: DateTime(2026, 9, 15), startMinutes: 8 * 60, title: 'A');
-    final second = buildEvent('2', date: DateTime(2026, 9, 15), startMinutes: 10 * 60, title: 'B');
-    final third = buildEvent('3', date: DateTime(2026, 9, 14), startMinutes: 12 * 60, title: 'C');
+    final first = buildEvent(
+      '1',
+      date: DateTime(2026, 9, 15),
+      startMinutes: 8 * 60,
+      title: 'A',
+    );
+    final second = buildEvent(
+      '2',
+      date: DateTime(2026, 9, 15),
+      startMinutes: 10 * 60,
+      title: 'B',
+    );
+    final third = buildEvent(
+      '3',
+      date: DateTime(2026, 9, 14),
+      startMinutes: 12 * 60,
+      title: 'C',
+    );
 
     await repository.saveEvent(second);
     await repository.saveEvent(third);
@@ -45,10 +60,17 @@ void main() {
 
   test('editar evento existente actualiza sus datos', () async {
     final repository = AgendaRepositoryLocal();
-    final original = buildEvent('1', date: DateTime(2026, 9, 15), startMinutes: 8 * 60, title: 'Original');
+    final original = buildEvent(
+      '1',
+      date: DateTime(2026, 9, 15),
+      startMinutes: 8 * 60,
+      title: 'Original',
+    );
     await repository.saveEvent(original);
 
-    await repository.saveEvent(original.copyWith(title: 'Actualizado', updatedAt: DateTime(2026, 9, 16)));
+    await repository.saveEvent(
+      original.copyWith(title: 'Actualizado', updatedAt: DateTime(2026, 9, 16)),
+    );
 
     final loaded = await repository.getEventById('1');
     expect(loaded, isNotNull);
@@ -57,8 +79,12 @@ void main() {
 
   test('eliminar evento lo remueve del almacenamiento', () async {
     final repository = AgendaRepositoryLocal();
-    await repository.saveEvent(buildEvent('1', date: DateTime(2026, 9, 15), startMinutes: 8 * 60));
-    await repository.saveEvent(buildEvent('2', date: DateTime(2026, 9, 16), startMinutes: 9 * 60));
+    await repository.saveEvent(
+      buildEvent('1', date: DateTime(2026, 9, 15), startMinutes: 8 * 60),
+    );
+    await repository.saveEvent(
+      buildEvent('2', date: DateTime(2026, 9, 16), startMinutes: 9 * 60),
+    );
 
     await repository.deleteEvent('1');
 
@@ -95,17 +121,20 @@ void main() {
     expect(prefs.getString(AgendaRepositoryLocal.storageKey), isNull);
   });
 
-  test('entradas corruptas parciales se descartan conservando el resto', () async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-      AgendaRepositoryLocal.storageKey,
-      '[{"id":"1","title":"Válido","date":"2026-09-15T00:00:00.000","startMinutes":480}, {"id":2}]',
-    );
+  test(
+    'entradas corruptas parciales se descartan conservando el resto',
+    () async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+        AgendaRepositoryLocal.storageKey,
+        '[{"id":"1","title":"Válido","date":"2026-09-15T00:00:00.000","startMinutes":480}, {"id":2}]',
+      );
 
-    final repository = AgendaRepositoryLocal();
-    final items = await repository.getEvents();
+      final repository = AgendaRepositoryLocal();
+      final items = await repository.getEvents();
 
-    expect(items.length, 1);
-    expect(items.single.id, '1');
-  });
+      expect(items.length, 1);
+      expect(items.single.id, '1');
+    },
+  );
 }

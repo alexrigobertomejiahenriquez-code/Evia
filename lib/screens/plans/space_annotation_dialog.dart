@@ -65,7 +65,9 @@ class _SpaceAnnotationDialogState extends State<SpaceAnnotationDialog> {
             if (_nameCtrl.text.isNotEmpty) {
               Navigator.pop(context, {
                 'name': _nameCtrl.text,
-                'measurements': _measCtrl.text.isEmpty ? 'No especificadas' : _measCtrl.text,
+                'measurements': _measCtrl.text.isEmpty
+                    ? 'No especificadas'
+                    : _measCtrl.text,
               });
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

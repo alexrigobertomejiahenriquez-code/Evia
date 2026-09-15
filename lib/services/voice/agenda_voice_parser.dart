@@ -32,7 +32,8 @@ class HeuristicAgendaVoiceParser implements AgendaVoiceParser {
   @override
   AgendaVoiceParseResult parse(String command) {
     final normalized = command.trim().toLowerCase();
-    if (normalized.contains('qué tengo para hoy') || normalized.contains('que tengo para hoy')) {
+    if (normalized.contains('qué tengo para hoy') ||
+        normalized.contains('que tengo para hoy')) {
       return AgendaVoiceParseResult(
         intent: AgendaVoiceIntent.listToday,
         originalCommand: command,
@@ -41,12 +42,15 @@ class HeuristicAgendaVoiceParser implements AgendaVoiceParser {
       );
     }
 
-    if (normalized.contains('recuérdame') || normalized.contains('agenda una cita')) {
+    if (normalized.contains('recuérdame') ||
+        normalized.contains('agenda una cita')) {
       return AgendaVoiceParseResult(
         intent: AgendaVoiceIntent.createEvent,
         originalCommand: command,
         normalizedCommand: normalized,
-        suggestedType: normalized.contains('cita') ? AgendaEventType.appointment : AgendaEventType.reminder,
+        suggestedType: normalized.contains('cita')
+            ? AgendaEventType.appointment
+            : AgendaEventType.reminder,
       );
     }
 

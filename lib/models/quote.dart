@@ -108,7 +108,8 @@ class Quote {
       otherCosts: otherCosts ?? this.otherCosts,
       discount: discount ?? this.discount,
       taxPercent: taxPercent ?? this.taxPercent,
-      targetBudget: clearTargetBudget ? null : (targetBudget ?? this.targetBudget),
+      targetBudget:
+          clearTargetBudget ? null : (targetBudget ?? this.targetBudget),
       projectId: clearProjectId ? null : (projectId ?? this.projectId),
       projectName: clearProjectName ? null : (projectName ?? this.projectName),
     );
@@ -140,14 +141,17 @@ class Quote {
       workDescription: json['workDescription'] as String? ?? '',
       items: itemsRaw is List
           ? itemsRaw
-              .map((e) => QuoteItem.fromJson(Map<String, dynamic>.from(e as Map)))
+              .map((e) =>
+                  QuoteItem.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList()
           : const [],
       laborCost: _asFiniteDouble(json['laborCost']),
       otherCosts: _asFiniteDouble(json['otherCosts']),
       discount: _asFiniteDouble(json['discount']),
       taxPercent: _asFiniteDouble(json['taxPercent']),
-      targetBudget: json['targetBudget'] == null ? null : _asFiniteDouble(json['targetBudget']),
+      targetBudget: json['targetBudget'] == null
+          ? null
+          : _asFiniteDouble(json['targetBudget']),
       projectId: json['projectId'] as String?,
       projectName: json['projectName'] as String?,
     );

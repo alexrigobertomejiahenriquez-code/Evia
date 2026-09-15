@@ -28,25 +28,30 @@ void main() {
     );
   }
 
-  test('sincroniza recordatorio vencido en avisos y evita duplicados', () async {
-    final service = AgendaReminderServiceLocal(
-      notificationService: NotificationServiceLocal(),
-    );
-    final event = buildEvent(
-      id: '1',
-      date: DateTime(2026, 9, 15),
-      startMinutes: 8 * 60,
-      reminder: const AgendaReminder(preset: AgendaReminderPreset.fiveMinutes),
-    );
+  test(
+    'sincroniza recordatorio vencido en avisos y evita duplicados',
+    () async {
+      final service = AgendaReminderServiceLocal(
+        notificationService: NotificationServiceLocal(),
+      );
+      final event = buildEvent(
+        id: '1',
+        date: DateTime(2026, 9, 15),
+        startMinutes: 8 * 60,
+        reminder: const AgendaReminder(
+          preset: AgendaReminderPreset.fiveMinutes,
+        ),
+      );
 
-    final now = DateTime(2026, 9, 15, 8);
-    await service.syncDueReminders([event], now: now);
-    await service.syncDueReminders([event], now: now);
+      final now = DateTime(2026, 9, 15, 8);
+      await service.syncDueReminders([event], now: now);
+      await service.syncDueReminders([event], now: now);
 
-    final notifications = await NotificationServiceLocal().getNotifications();
-    expect(notifications.length, 1);
-    expect(notifications.single.id, event.reminderNotificationId);
-  });
+      final notifications = await NotificationServiceLocal().getNotifications();
+      expect(notifications.length, 1);
+      expect(notifications.single.id, event.reminderNotificationId);
+    },
+  );
 
   test('no genera aviso si el recordatorio aún no vence', () async {
     final service = AgendaReminderServiceLocal(
@@ -96,12 +101,17 @@ void main() {
       reminder: reminder,
     );
 
-    expect(reminder.resolveTriggerAt(event.startDateTime), DateTime(2026, 9, 14, 17, 45));
+    expect(
+      reminder.resolveTriggerAt(event.startDateTime),
+      DateTime(2026, 9, 14, 17, 45),
+    );
   });
 
   test('cambiar configuración limpia estado previo del recordatorio', () async {
     final notifications = NotificationServiceLocal();
-    final service = AgendaReminderServiceLocal(notificationService: notifications);
+    final service = AgendaReminderServiceLocal(
+      notificationService: notifications,
+    );
     final original = buildEvent(
       id: '5',
       date: DateTime(2026, 9, 15),
@@ -118,7 +128,11 @@ void main() {
     await service.syncEvent(original, now: DateTime(2026, 9, 15, 8));
     expect((await notifications.getNotifications()).length, 1);
 
-    await service.syncEvent(updated, previousEvent: original, now: DateTime(2026, 9, 15, 9, 30));
+    await service.syncEvent(
+      updated,
+      previousEvent: original,
+      now: DateTime(2026, 9, 15, 9, 30),
+    );
     final stored = await notifications.getNotifications();
 
     expect(stored.length, 1);

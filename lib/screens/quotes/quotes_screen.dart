@@ -65,8 +65,12 @@ class _QuotesScreenState extends State<QuotesScreen> {
         title: const Text('Eliminar cotización'),
         content: Text('¿Deseas eliminar "${quote.title}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancelar')),
-          ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Eliminar')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancelar')),
+          ElevatedButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Eliminar')),
         ],
       ),
     );
@@ -97,7 +101,8 @@ class _QuotesScreenState extends State<QuotesScreen> {
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
                     itemCount: _quotes.length,
-                    itemBuilder: (context, index) => _buildQuoteCard(_quotes[index]),
+                    itemBuilder: (context, index) =>
+                        _buildQuoteCard(_quotes[index]),
                   ),
                 ),
     );
@@ -110,7 +115,8 @@ class _QuotesScreenState extends State<QuotesScreen> {
         children: [
           Icon(Icons.request_quote, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 12),
-          Text('Sin cotizaciones guardadas', style: Theme.of(context).textTheme.bodyLarge),
+          Text('Sin cotizaciones guardadas',
+              style: Theme.of(context).textTheme.bodyLarge),
           const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: () => _openForm(),
@@ -129,7 +135,8 @@ class _QuotesScreenState extends State<QuotesScreen> {
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
       child: ListTile(
         onTap: () => _openForm(quote: quote),
-        title: Text(quote.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(quote.title,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -158,7 +165,8 @@ class _QuotesScreenState extends State<QuotesScreen> {
     );
   }
 
-  String _formatDate(DateTime value) => '${value.day.toString().padLeft(2, '0')}/${value.month.toString().padLeft(2, '0')}/${value.year}';
+  String _formatDate(DateTime value) =>
+      '${value.day.toString().padLeft(2, '0')}/${value.month.toString().padLeft(2, '0')}/${value.year}';
 
   String _currency(double value) => '\$${value.toStringAsFixed(2)}';
 }

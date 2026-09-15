@@ -32,7 +32,8 @@ class AgendaReminderServiceLocal {
     AgendaEvent? previousEvent,
     DateTime? now,
   }) async {
-    if (previousEvent != null && previousEvent.reminderNotificationId != event.reminderNotificationId) {
+    if (previousEvent != null &&
+        previousEvent.reminderNotificationId != event.reminderNotificationId) {
       await clearReminderStateForEvent(event.id);
     }
     return syncDueReminders([event], now: now);
@@ -55,7 +56,8 @@ class AgendaReminderServiceLocal {
       final reminderId = event.reminderNotificationId!;
       final triggerAt = event.reminder!.resolveTriggerAt(event.startDateTime);
       if (triggerAt.isAfter(current)) continue;
-      if (delivered.contains(reminderId) || existingIds.contains(reminderId)) continue;
+      if (delivered.contains(reminderId) || existingIds.contains(reminderId))
+        continue;
 
       final notification = NotificationItem(
         id: reminderId,
@@ -82,7 +84,9 @@ class AgendaReminderServiceLocal {
 
   Future<void> clearReminderStateForEvent(String eventId) async {
     final notifications = await notificationService.getNotifications();
-    final related = notifications.where((item) => item.id.startsWith('agenda_reminder_${eventId}_')).toList();
+    final related = notifications
+        .where((item) => item.id.startsWith('agenda_reminder_${eventId}_'))
+        .toList();
     for (final item in related) {
       await notificationService.remove(item.id);
     }

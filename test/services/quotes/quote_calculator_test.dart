@@ -30,8 +30,18 @@ void main() {
   test('calcula subtotal, descuento, impuesto y total en centavos', () {
     final quote = buildQuote(
       items: const [
-        QuoteItem(id: '1', description: 'Cemento', quantity: 2, unit: 'bolsa', unitPrice: 10.50),
-        QuoteItem(id: '2', description: 'Pintura', quantity: 1.5, unit: 'galón', unitPrice: 20),
+        QuoteItem(
+            id: '1',
+            description: 'Cemento',
+            quantity: 2,
+            unit: 'bolsa',
+            unitPrice: 10.50),
+        QuoteItem(
+            id: '2',
+            description: 'Pintura',
+            quantity: 1.5,
+            unit: 'galón',
+            unitPrice: 20),
       ],
       labor: 100.25,
       other: 9.75,
@@ -61,7 +71,8 @@ void main() {
 
   test('diferencia de 0.01 maneja estado exceso/disponible por centavos', () {
     final over = QuoteCalculator.calculate(buildQuote(labor: 10, budget: 9.99));
-    final available = QuoteCalculator.calculate(buildQuote(labor: 10, budget: 10.01));
+    final available =
+        QuoteCalculator.calculate(buildQuote(labor: 10, budget: 10.01));
 
     expect(over.budgetDifferenceCents, -1);
     expect(over.budgetStatus, BudgetStatus.overBudget);
@@ -73,7 +84,12 @@ void main() {
   test('valores decimales evitan ruido de punto flotante', () {
     final quote = buildQuote(
       items: const [
-        QuoteItem(id: '1', description: 'Decimal', quantity: 0.1, unit: 'u', unitPrice: 0.2),
+        QuoteItem(
+            id: '1',
+            description: 'Decimal',
+            quantity: 0.1,
+            unit: 'u',
+            unitPrice: 0.2),
       ],
     );
 

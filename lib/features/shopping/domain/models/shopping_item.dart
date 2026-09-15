@@ -1,7 +1,5 @@
 // lib/features/shopping/domain/models/shopping_item.dart
 
-import 'package:flutter/foundation.dart';
-
 class ShoppingItem {
   final String id;
   final String nombre;

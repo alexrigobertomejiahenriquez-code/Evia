@@ -46,8 +46,14 @@ void main() {
         type: AgendaEventType.task,
       );
 
-      final completed = task.markTaskCompleted(true, updatedAt: DateTime(2026, 9, 16));
-      final pendingAgain = completed.markTaskCompleted(false, updatedAt: DateTime(2026, 9, 17));
+      final completed = task.markTaskCompleted(
+        true,
+        updatedAt: DateTime(2026, 9, 16),
+      );
+      final pendingAgain = completed.markTaskCompleted(
+        false,
+        updatedAt: DateTime(2026, 9, 17),
+      );
 
       expect(completed.status, AgendaEventStatus.completed);
       expect(pendingAgain.status, AgendaEventStatus.pending);
@@ -78,24 +84,27 @@ void main() {
       expect(event.endMinutes, isNull);
     });
 
-    test('medianoche, cambio de mes y cambio de año se conservan correctamente', () {
-      final monthEnd = AgendaEvent(
-        id: 'month',
-        title: 'Cierre mensual',
-        date: DateTime(2026, 1, 31),
-        startMinutes: 23 * 60 + 59,
-      );
-      final yearEnd = AgendaEvent(
-        id: 'year',
-        title: 'Cierre anual',
-        date: DateTime(2026, 12, 31),
-        startMinutes: 0,
-      );
+    test(
+      'medianoche, cambio de mes y cambio de año se conservan correctamente',
+      () {
+        final monthEnd = AgendaEvent(
+          id: 'month',
+          title: 'Cierre mensual',
+          date: DateTime(2026, 1, 31),
+          startMinutes: 23 * 60 + 59,
+        );
+        final yearEnd = AgendaEvent(
+          id: 'year',
+          title: 'Cierre anual',
+          date: DateTime(2026, 12, 31),
+          startMinutes: 0,
+        );
 
-      expect(monthEnd.startDateTime, DateTime(2026, 1, 31, 23, 59));
-      expect(yearEnd.startDateTime, DateTime(2026, 12, 31));
-      expect(yearEnd.occursOn(DateTime(2026, 12, 31, 23, 30)), isTrue);
-    });
+        expect(monthEnd.startDateTime, DateTime(2026, 1, 31, 23, 59));
+        expect(yearEnd.startDateTime, DateTime(2026, 12, 31));
+        expect(yearEnd.occursOn(DateTime(2026, 12, 31, 23, 30)), isTrue);
+      },
+    );
 
     test('recordatorio resuelve fecha y hora correctas', () {
       final event = AgendaEvent(
@@ -106,7 +115,10 @@ void main() {
         reminder: const AgendaReminder(preset: AgendaReminderPreset.oneHour),
       );
 
-      expect(event.reminder!.resolveTriggerAt(event.startDateTime), DateTime(2026, 9, 15, 9));
+      expect(
+        event.reminder!.resolveTriggerAt(event.startDateTime),
+        DateTime(2026, 9, 15, 9),
+      );
       expect(event.reminderNotificationId, contains('agenda_reminder_4_'));
     });
 

@@ -7,7 +7,6 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/common/app_scaffold.dart';
-import '../../models/notification_item.dart';
 import '../../services/notifications/notification_service_local.dart';
 import '../../features/notifications/presentation/controllers/notification_controller.dart';
 
@@ -47,23 +46,30 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Confirmar'),
-        content: const Text('¿Deseas eliminar todas las notificaciones? Esta acción no se puede deshacer.'),
+        content: const Text(
+            '¿Deseas eliminar todas las notificaciones? Esta acción no se puede deshacer.'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancelar')),
-          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Eliminar')),
+          TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: const Text('Cancelar')),
+          ElevatedButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: const Text('Eliminar')),
         ],
       ),
     );
     if (ok == true) {
       await _controller.clearAll();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Notificaciones eliminadas')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Notificaciones eliminadas')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_controller.loading) {
-      return const AppScaffold(title: 'Avisos', child: Center(child: CircularProgressIndicator()));
+      return const AppScaffold(
+          title: 'Avisos', child: Center(child: CircularProgressIndicator()));
     }
 
     if (_controller.error != null) {
@@ -83,11 +89,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             padding: const EdgeInsets.all(12.0),
             child: Row(
               children: [
-                Text('Notificaciones', style: Theme.of(context).textTheme.titleLarge),
+                Text('Notificaciones',
+                    style: Theme.of(context).textTheme.titleLarge),
                 const Spacer(),
                 IconButton(
                   tooltip: 'Marcar todas leídas',
-                  onPressed: items.isEmpty ? null : () => _controller.markAllRead(),
+                  onPressed:
+                      items.isEmpty ? null : () => _controller.markAllRead(),
                   icon: const Icon(Icons.mark_email_read),
                 ),
                 IconButton(
@@ -100,7 +108,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
           Expanded(
             child: items.isEmpty
-                ? Center(child: Text('Sin notificaciones', style: Theme.of(context).textTheme.bodyLarge))
+                ? Center(
+                    child: Text('Sin notificaciones',
+                        style: Theme.of(context).textTheme.bodyLarge))
                 : RefreshIndicator(
                     onRefresh: () => _controller.loadNotifications(),
                     child: ListView.separated(
@@ -109,17 +119,24 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       itemBuilder: (context, index) {
                         final it = items[index];
                         return ListTile(
-                          leading: Icon(it.read ? Icons.mark_email_read : Icons.mark_email_unread),
+                          leading: Icon(it.read
+                              ? Icons.mark_email_read
+                              : Icons.mark_email_unread),
                           title: Text(it.title),
                           subtitle: Text(it.body),
-                          trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                          trailing:
+                              Row(mainAxisSize: MainAxisSize.min, children: [
                             IconButton(
-                              icon: Icon(it.read ? Icons.visibility_off : Icons.visibility),
-                              onPressed: () => _controller.markRead(it.id, !it.read),
+                              icon: Icon(it.read
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              onPressed: () =>
+                                  _controller.markRead(it.id, !it.read),
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete_forever),
-                              onPressed: () => _controller.removeNotification(it.id),
+                              onPressed: () =>
+                                  _controller.removeNotification(it.id),
                             ),
                           ]),
                           onTap: () => _controller.markRead(it.id, true),

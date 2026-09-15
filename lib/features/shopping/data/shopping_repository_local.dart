@@ -7,7 +7,8 @@ class ShoppingRepositoryLocal implements ShoppingRepository {
   static const _itemsKey = 'shopping_items';
   static const _budgetKey = 'shopping_budget';
 
-  Future<SharedPreferences> get _prefs async => await SharedPreferences.getInstance();
+  Future<SharedPreferences> get _prefs async =>
+      await SharedPreferences.getInstance();
 
   @override
   Future<void> addItem(ShoppingItem item) async {
@@ -25,7 +26,9 @@ class ShoppingRepositoryLocal implements ShoppingRepository {
     if (raw == null || raw.isEmpty) return [];
     try {
       final decoded = jsonDecode(raw) as List;
-      return decoded.map((m) => ShoppingItem.fromJson(Map<String, dynamic>.from(m))).toList();
+      return decoded
+          .map((m) => ShoppingItem.fromJson(Map<String, dynamic>.from(m)))
+          .toList();
     } catch (e) {
       // si hay error, limpiar y devolver lista vacía
       await prefs.remove(_itemsKey);
@@ -53,7 +56,8 @@ class ShoppingRepositoryLocal implements ShoppingRepository {
     } else {
       // si no existe agregar
       items.add(item);
-      await prefs.setString(_itemsKey, jsonEncode(items.map((e) => e.toJson()).toList()));
+      await prefs.setString(
+          _itemsKey, jsonEncode(items.map((e) => e.toJson()).toList()));
     }
   }
 
@@ -77,7 +81,8 @@ class ShoppingRepositoryLocal implements ShoppingRepository {
     if (idx >= 0) {
       final updated = items[idx].copyWith(completado: completed);
       items[idx] = updated;
-      await prefs.setString(_itemsKey, jsonEncode(items.map((e) => e.toJson()).toList()));
+      await prefs.setString(
+          _itemsKey, jsonEncode(items.map((e) => e.toJson()).toList()));
     }
   }
 }

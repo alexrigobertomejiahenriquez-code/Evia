@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTypography {
   static TextTheme buildTextTheme(Brightness brightness) {
     final isLight = brightness == Brightness.light;
-    final baseTextColor = isLight ? const Color(0xFF1C1B1F) : const Color(0xFFE6E1E6);
+    final baseTextColor =
+        isLight ? const Color(0xFF1C1B1F) : const Color(0xFFE6E1E6);
 
     return TextTheme(
       // Display - Títulos muy grandes

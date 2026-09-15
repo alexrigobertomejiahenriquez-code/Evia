@@ -30,7 +30,8 @@ class _ProjectFormScreenState extends State<ProjectFormScreen> {
     _nameCtrl = TextEditingController(text: project?.name ?? '');
     _descCtrl = TextEditingController(text: project?.description ?? '');
     _addressCtrl = TextEditingController(text: project?.address ?? '');
-    _budgetCtrl = TextEditingController(text: project?.estimatedBudget?.toString() ?? '');
+    _budgetCtrl =
+        TextEditingController(text: project?.estimatedBudget?.toString() ?? '');
     _tagsCtrl = TextEditingController(text: project?.tags.join(', ') ?? '');
     _startDate = project?.startDate;
     _endDate = project?.endDate;
@@ -67,12 +68,20 @@ class _ProjectFormScreenState extends State<ProjectFormScreen> {
 
   void _saveProject() {
     if (_nameCtrl.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('El nombre es requerido')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('El nombre es requerido')));
       return;
     }
 
-    final tags = _tagsCtrl.text.isEmpty ? [] : _tagsCtrl.text.split(',').map((t) => t.trim()).toList();
-    final budget = _budgetCtrl.text.isEmpty ? null : double.tryParse(_budgetCtrl.text);
+    final tags = _tagsCtrl.text.isEmpty
+        ? <String>[]
+        : _tagsCtrl.text
+            .split(',')
+            .map((t) => t.trim())
+            .where((t) => t.isNotEmpty)
+            .toList();
+    final budget =
+        _budgetCtrl.text.isEmpty ? null : double.tryParse(_budgetCtrl.text);
 
     final project = Project(
       id: widget.project?.id ?? '',
@@ -100,7 +109,8 @@ class _ProjectFormScreenState extends State<ProjectFormScreen> {
           children: [
             TextField(
               controller: _nameCtrl,
-              decoration: const InputDecoration(labelText: 'Nombre del Proyecto'),
+              decoration:
+                  const InputDecoration(labelText: 'Nombre del Proyecto'),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -111,25 +121,30 @@ class _ProjectFormScreenState extends State<ProjectFormScreen> {
             const SizedBox(height: 16),
             TextField(
               controller: _addressCtrl,
-              decoration: const InputDecoration(labelText: 'Dirección (opcional)'),
+              decoration:
+                  const InputDecoration(labelText: 'Dirección (opcional)'),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _budgetCtrl,
-              decoration: const InputDecoration(labelText: 'Presupuesto Estimado (opcional)'),
+              decoration: const InputDecoration(
+                  labelText: 'Presupuesto Estimado (opcional)'),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              value: _selectedStatus,
+              initialValue: _selectedStatus,
               decoration: const InputDecoration(labelText: 'Estado'),
               items: const [
-                DropdownMenuItem(value: 'planning', child: Text('Planificación')),
-                DropdownMenuItem(value: 'in_progress', child: Text('En Progreso')),
+                DropdownMenuItem(
+                    value: 'planning', child: Text('Planificación')),
+                DropdownMenuItem(
+                    value: 'in_progress', child: Text('En Progreso')),
                 DropdownMenuItem(value: 'completed', child: Text('Completado')),
                 DropdownMenuItem(value: 'on_hold', child: Text('En Pausa')),
               ],
-              onChanged: (value) => setState(() => _selectedStatus = value ?? 'planning'),
+              onChanged: (value) =>
+                  setState(() => _selectedStatus = value ?? 'planning'),
             ),
             const SizedBox(height: 16),
             Row(
@@ -164,7 +179,8 @@ class _ProjectFormScreenState extends State<ProjectFormScreen> {
             const SizedBox(height: 16),
             TextField(
               controller: _tagsCtrl,
-              decoration: const InputDecoration(labelText: 'Etiquetas (separadas por coma, opcional)'),
+              decoration: const InputDecoration(
+                  labelText: 'Etiquetas (separadas por coma, opcional)'),
             ),
             const SizedBox(height: 24),
             SizedBox(
@@ -180,5 +196,7 @@ class _ProjectFormScreenState extends State<ProjectFormScreen> {
     );
   }
 
-  String _formatDate(DateTime? date) => date != null ? '${date.day}/${date.month}/${date.year}' : 'No seleccionada';
+  String _formatDate(DateTime? date) => date != null
+      ? '${date.day}/${date.month}/${date.year}'
+      : 'No seleccionada';
 }

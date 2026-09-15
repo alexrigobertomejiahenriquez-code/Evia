@@ -5,7 +5,11 @@ class HomeTile extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const HomeTile({super.key, required this.icon, required this.title, required this.onTap});
+  const HomeTile(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,9 @@ class HomeTile extends StatelessWidget {
             children: [
               Icon(icon, size: 32, color: colorScheme.primary),
               const SizedBox(height: 12),
-              Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
+              Text(title,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium),
             ],
           ),
         ),

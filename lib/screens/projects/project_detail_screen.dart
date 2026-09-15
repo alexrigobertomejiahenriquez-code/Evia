@@ -28,7 +28,8 @@ class ProjectDetailScreen extends StatelessWidget {
     return AppScaffold(
       title: project.name,
       actions: [
-        IconButton(icon: const Icon(Icons.edit), onPressed: onEdit, tooltip: 'Editar'),
+        IconButton(
+            icon: const Icon(Icons.edit), onPressed: onEdit, tooltip: 'Editar'),
         IconButton(
           icon: const Icon(Icons.delete, color: Colors.red),
           onPressed: () => onDelete(project),
@@ -42,12 +43,31 @@ class ProjectDetailScreen extends StatelessWidget {
           children: [
             _buildSection('Descripción', project.description),
             const SizedBox(height: 16),
-            _buildSection('Estado', statusLabels[project.status] ?? project.status),
-            if (project.address != null) ...[const SizedBox(height: 16), _buildSection('Dirección', project.address!)],
-            if (project.estimatedBudget != null) ...[const SizedBox(height: 16), _buildSection('Presupuesto Estimado', '\$${project.estimatedBudget?.toStringAsFixed(2)}')] else [],
-            if (project.startDate != null) ...[const SizedBox(height: 16), _buildSection('Fecha Inicio', _formatDate(project.startDate!))],
-            if (project.endDate != null) ...[const SizedBox(height: 16), _buildSection('Fecha Fin', _formatDate(project.endDate!))],
-            if (project.tags.isNotEmpty) ...[const SizedBox(height: 16), _buildTagsSection()],
+            _buildSection(
+                'Estado', statusLabels[project.status] ?? project.status),
+            if (project.address != null) ...[
+              const SizedBox(height: 16),
+              _buildSection('Dirección', project.address!)
+            ],
+            if (project.estimatedBudget != null) ...[
+              const SizedBox(height: 16),
+              _buildSection(
+                'Presupuesto Estimado',
+                '\$${project.estimatedBudget?.toStringAsFixed(2)}',
+              ),
+            ],
+            if (project.startDate != null) ...[
+              const SizedBox(height: 16),
+              _buildSection('Fecha Inicio', _formatDate(project.startDate!))
+            ],
+            if (project.endDate != null) ...[
+              const SizedBox(height: 16),
+              _buildSection('Fecha Fin', _formatDate(project.endDate!))
+            ],
+            if (project.tags.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              _buildTagsSection()
+            ],
           ],
         ),
       ),
@@ -58,7 +78,8 @@ class ProjectDetailScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        Text(title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 8),
         Text(content, style: const TextStyle(fontSize: 14)),
       ],
@@ -69,7 +90,8 @@ class ProjectDetailScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Etiquetas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        const Text('Etiquetas',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,

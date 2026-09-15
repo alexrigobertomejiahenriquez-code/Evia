@@ -6,7 +6,10 @@ import 'agenda_event_form_screen.dart';
 
 class AgendaEventDetailScreen extends StatefulWidget {
   final AgendaEvent event;
-  final Future<void> Function(AgendaEvent previousEvent, AgendaEvent updatedEvent) onSave;
+  final Future<void> Function(
+    AgendaEvent previousEvent,
+    AgendaEvent updatedEvent,
+  ) onSave;
   final Future<void> Function(AgendaEvent event) onDelete;
   final Future<void> Function(AgendaEvent event, bool completed) onToggleTask;
 
@@ -19,7 +22,8 @@ class AgendaEventDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<AgendaEventDetailScreen> createState() => _AgendaEventDetailScreenState();
+  State<AgendaEventDetailScreen> createState() =>
+      _AgendaEventDetailScreenState();
 }
 
 class _AgendaEventDetailScreenState extends State<AgendaEventDetailScreen> {
@@ -49,8 +53,14 @@ class _AgendaEventDetailScreenState extends State<AgendaEventDetailScreen> {
         title: const Text('Eliminar evento'),
         content: Text('¿Deseas eliminar "${_event.title}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancelar')),
-          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Eliminar')),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Eliminar'),
+          ),
         ],
       ),
     );
@@ -66,7 +76,10 @@ class _AgendaEventDetailScreenState extends State<AgendaEventDetailScreen> {
     await widget.onToggleTask(_event, !_event.isCompleted);
     if (!mounted) return;
     setState(() {
-      _event = _event.markTaskCompleted(!_event.isCompleted, updatedAt: DateTime.now());
+      _event = _event.markTaskCompleted(
+        !_event.isCompleted,
+        updatedAt: DateTime.now(),
+      );
     });
   }
 
@@ -75,8 +88,16 @@ class _AgendaEventDetailScreenState extends State<AgendaEventDetailScreen> {
     return AppScaffold(
       title: 'Detalle agenda',
       actions: [
-        IconButton(onPressed: _edit, icon: const Icon(Icons.edit), tooltip: 'Editar'),
-        IconButton(onPressed: _confirmDelete, icon: const Icon(Icons.delete_outline), tooltip: 'Eliminar'),
+        IconButton(
+          onPressed: _edit,
+          icon: const Icon(Icons.edit),
+          tooltip: 'Editar',
+        ),
+        IconButton(
+          onPressed: _confirmDelete,
+          icon: const Icon(Icons.delete_outline),
+          tooltip: 'Eliminar',
+        ),
       ],
       child: ListView(
         padding: const EdgeInsets.all(16),
@@ -89,27 +110,44 @@ class _AgendaEventDetailScreenState extends State<AgendaEventDetailScreen> {
             children: [
               Chip(label: Text(_event.type.label)),
               Chip(label: Text(_event.status.label)),
-              if (_event.reminder != null) Chip(label: Text(_event.reminder!.label)),
+              if (_event.reminder != null)
+                Chip(label: Text(_event.reminder!.label)),
             ],
           ),
           const SizedBox(height: 16),
           _buildRow(context, 'Fecha', _formatDate(_event.date)),
-          _buildRow(context, 'Hora', _event.allDay ? 'Todo el día' : _formatTimeRange(_event)),
-          _buildRow(context, 'Descripción', _event.description.isEmpty ? 'Sin descripción' : _event.description),
-          _buildRow(context, 'Ubicación', _event.location?.isEmpty ?? true ? 'Sin ubicación' : _event.location!),
+          _buildRow(
+            context,
+            'Hora',
+            _event.allDay ? 'Todo el día' : _formatTimeRange(_event),
+          ),
+          _buildRow(
+            context,
+            'Descripción',
+            _event.description.isEmpty ? 'Sin descripción' : _event.description,
+          ),
+          _buildRow(
+            context,
+            'Ubicación',
+            _event.location?.isEmpty ?? true
+                ? 'Sin ubicación'
+                : _event.location!,
+          ),
           _buildRow(context, 'Categoría', _event.type.label),
           _buildRow(context, 'Estado', _event.status.label),
           _buildRow(
             context,
             'Proyecto',
-            _event.relations.projectName == null || _event.relations.projectName!.isEmpty
+            _event.relations.projectName == null ||
+                    _event.relations.projectName!.isEmpty
                 ? 'Sin proyecto relacionado'
                 : _event.relations.projectName!,
           ),
           _buildRow(
             context,
             'Cliente',
-            _event.relations.clientName == null || _event.relations.clientName!.isEmpty
+            _event.relations.clientName == null ||
+                    _event.relations.clientName!.isEmpty
                 ? 'Sin cliente relacionado'
                 : _event.relations.clientName!,
           ),
@@ -120,13 +158,19 @@ class _AgendaEventDetailScreenState extends State<AgendaEventDetailScreen> {
                 ? 'Sin recordatorio'
                 : '${_event.reminder!.label}\nLa programación nativa aún no está activa; se sincroniza con Avisos cuando la app se abre.',
           ),
-          _buildRow(context, 'Notas', _event.notes.isEmpty ? 'Sin notas' : _event.notes),
+          _buildRow(
+            context,
+            'Notas',
+            _event.notes.isEmpty ? 'Sin notas' : _event.notes,
+          ),
           const SizedBox(height: 24),
           if (_event.isTask)
             ElevatedButton.icon(
               onPressed: _toggleTask,
               icon: Icon(_event.isCompleted ? Icons.undo : Icons.check_circle),
-              label: Text(_event.isCompleted ? 'Marcar pendiente' : 'Completar tarea'),
+              label: Text(
+                _event.isCompleted ? 'Marcar pendiente' : 'Completar tarea',
+              ),
             ),
           if (_event.isTask) const SizedBox(height: 12),
           OutlinedButton.icon(

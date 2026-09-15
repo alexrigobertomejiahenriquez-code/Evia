@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../features/agenda/data/agenda_repository_local.dart';
+import '../../features/agenda/domain/models/agenda_event.dart';
 import '../../features/agenda/domain/repositories/agenda_repository.dart';
 import '../../widgets/common/app_scaffold.dart';
 import 'search_service.dart';
@@ -189,19 +190,18 @@ class _SearchScreenState extends State<SearchScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          child: Text(
-            category,
-            style: Theme.of(context).textTheme.titleMedium,
+          child: Text(category, style: Theme.of(context).textTheme.titleMedium),
+        ),
+        ...items.map(
+          (r) => Card(
+            child: ListTile(
+              title: Text(r.title),
+              subtitle: Text(r.subtitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _openResult(r),
+            ),
           ),
         ),
-        ...items.map((r) => Card(
-              child: ListTile(
-                title: Text(r.title),
-                subtitle: Text(r.subtitle),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => _openResult(r),
-              ),
-            )),
       ],
     );
   }

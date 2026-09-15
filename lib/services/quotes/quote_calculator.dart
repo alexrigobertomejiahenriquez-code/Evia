@@ -29,16 +29,21 @@ class QuoteTotals {
     required this.budgetStatus,
   });
 
-  double get itemsSubtotal => fromCents(itemsSubtotalCents);
-  double get laborCost => fromCents(laborCostCents);
-  double get otherCosts => fromCents(otherCostsCents);
-  double get subtotalBeforeDiscount => fromCents(subtotalBeforeDiscountCents);
-  double get discount => fromCents(discountCents);
-  double get taxableSubtotal => fromCents(taxableSubtotalCents);
-  double get tax => fromCents(taxCents);
-  double get total => fromCents(totalCents);
-  double? get targetBudget => targetBudgetCents == null ? null : fromCents(targetBudgetCents!);
-  double? get budgetDifference => budgetDifferenceCents == null ? null : fromCents(budgetDifferenceCents!);
+  double get itemsSubtotal => QuoteCalculator.fromCents(itemsSubtotalCents);
+  double get laborCost => QuoteCalculator.fromCents(laborCostCents);
+  double get otherCosts => QuoteCalculator.fromCents(otherCostsCents);
+  double get subtotalBeforeDiscount =>
+      QuoteCalculator.fromCents(subtotalBeforeDiscountCents);
+  double get discount => QuoteCalculator.fromCents(discountCents);
+  double get taxableSubtotal => QuoteCalculator.fromCents(taxableSubtotalCents);
+  double get tax => QuoteCalculator.fromCents(taxCents);
+  double get total => QuoteCalculator.fromCents(totalCents);
+  double? get targetBudget => targetBudgetCents == null
+      ? null
+      : QuoteCalculator.fromCents(targetBudgetCents!);
+  double? get budgetDifference => budgetDifferenceCents == null
+      ? null
+      : QuoteCalculator.fromCents(budgetDifferenceCents!);
 
   String get budgetStatusLabel {
     switch (budgetStatus) {
@@ -74,7 +79,8 @@ class QuoteCalculator {
     final tax = ((taxable * _safePercent(quote.taxPercent)) / 100).round();
     final total = taxable + tax;
 
-    final budgetCents = quote.targetBudget == null ? null : toCents(quote.targetBudget!);
+    final budgetCents =
+        quote.targetBudget == null ? null : toCents(quote.targetBudget!);
     final difference = budgetCents == null ? null : budgetCents - total;
     final status = _budgetStatus(budgetCents, difference);
 

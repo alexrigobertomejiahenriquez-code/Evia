@@ -70,8 +70,12 @@ class Project {
       name: json['name'] as String,
       description: json['description'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      startDate: json['startDate'] != null ? DateTime.parse(json['startDate'] as String) : null,
-      endDate: json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null,
+      startDate: json['startDate'] != null
+          ? DateTime.parse(json['startDate'] as String)
+          : null,
+      endDate: json['endDate'] != null
+          ? DateTime.parse(json['endDate'] as String)
+          : null,
       status: json['status'] as String? ?? 'planning',
       address: json['address'] as String?,
       estimatedBudget: (json['estimatedBudget'] as num?)?.toDouble(),

@@ -18,10 +18,13 @@ void main() {
     expect(items, isEmpty);
   });
 
-  test('saveNotifications and getNotifications preserve data and order', () async {
+  test('saveNotifications and getNotifications preserve data and order',
+      () async {
     final service = NotificationServiceLocal();
-    final a = NotificationItem(id: 'a', title: 'A', body: 'Body A', date: DateTime.now());
-    final b = NotificationItem(id: 'b', title: 'B', body: 'Body B', date: DateTime.now());
+    final a = NotificationItem(
+        id: 'a', title: 'A', body: 'Body A', date: DateTime.now());
+    final b = NotificationItem(
+        id: 'b', title: 'B', body: 'Body B', date: DateTime.now());
 
     await service.saveNotifications([a, b]);
 
@@ -35,8 +38,10 @@ void main() {
 
   test('add inserts new notification at the start', () async {
     final service = NotificationServiceLocal();
-    final old = NotificationItem(id: 'old', title: 'Old', body: 'Old body', date: DateTime.now());
-    final newer = NotificationItem(id: 'new', title: 'New', body: 'New body', date: DateTime.now());
+    final old = NotificationItem(
+        id: 'old', title: 'Old', body: 'Old body', date: DateTime.now());
+    final newer = NotificationItem(
+        id: 'new', title: 'New', body: 'New body', date: DateTime.now());
 
     await service.saveNotifications([old]);
     await service.add(newer);
@@ -48,8 +53,10 @@ void main() {
 
   test('remove deletes only the indicated notification', () async {
     final service = NotificationServiceLocal();
-    final a = NotificationItem(id: 'a', title: 'A', body: 'Body A', date: DateTime.now());
-    final b = NotificationItem(id: 'b', title: 'B', body: 'Body B', date: DateTime.now());
+    final a = NotificationItem(
+        id: 'a', title: 'A', body: 'Body A', date: DateTime.now());
+    final b = NotificationItem(
+        id: 'b', title: 'B', body: 'Body B', date: DateTime.now());
 
     await service.saveNotifications([a, b]);
     await service.remove('a');
@@ -61,7 +68,8 @@ void main() {
 
   test('markRead updates the read field correctly', () async {
     final service = NotificationServiceLocal();
-    final a = NotificationItem(id: 'a', title: 'A', body: 'Body A', date: DateTime.now(), read: false);
+    final a = NotificationItem(
+        id: 'a', title: 'A', body: 'Body A', date: DateTime.now(), read: false);
 
     await service.saveNotifications([a]);
     await service.markRead('a', true);
@@ -76,8 +84,10 @@ void main() {
 
   test('markAllRead marks all notifications as read', () async {
     final service = NotificationServiceLocal();
-    final a = NotificationItem(id: 'a', title: 'A', body: 'Body A', date: DateTime.now(), read: false);
-    final b = NotificationItem(id: 'b', title: 'B', body: 'Body B', date: DateTime.now(), read: false);
+    final a = NotificationItem(
+        id: 'a', title: 'A', body: 'Body A', date: DateTime.now(), read: false);
+    final b = NotificationItem(
+        id: 'b', title: 'B', body: 'Body B', date: DateTime.now(), read: false);
 
     await service.saveNotifications([a, b]);
     await service.markAllRead();
@@ -88,7 +98,8 @@ void main() {
 
   test('clearAll removes stored data', () async {
     final service = NotificationServiceLocal();
-    final a = NotificationItem(id: 'a', title: 'A', body: 'Body A', date: DateTime.now());
+    final a = NotificationItem(
+        id: 'a', title: 'A', body: 'Body A', date: DateTime.now());
 
     await service.saveNotifications([a]);
 
@@ -116,6 +127,7 @@ void main() {
     expect(items, isEmpty);
 
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getString(storageKey), isNull, reason: 'Corrupt storage should be removed');
+    expect(prefs.getString(storageKey), isNull,
+        reason: 'Corrupt storage should be removed');
   });
 }

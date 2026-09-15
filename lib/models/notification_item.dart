@@ -55,7 +55,8 @@ class NotificationItem {
   String toString() => 'NotificationItem(id: $id, title: $title, read: $read)';
 
   @override
-  bool operator ==(Object other) => identical(this, other) || (other is NotificationItem && other.id == id);
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is NotificationItem && other.id == id);
 
   @override
   int get hashCode => id.hashCode;

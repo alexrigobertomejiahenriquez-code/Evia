@@ -10,7 +10,6 @@ import '../features/shopping/presentation/pages/shopping_page.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/create/create_screen.dart';
 import '../screens/notifications/notifications_screen.dart';
-import '../screens/home/home_screen.dart';
 import '../screens/quotes/quotes_screen.dart';
 
 class AppRouteGenerator {
@@ -40,7 +39,9 @@ class AppRouteGenerator {
         } else if (args is Map && args['title'] is String) {
           title = args['title'] as String;
         }
-        return MaterialPageRoute(builder: (_) => PlaceholderScreen(title: title));
+        return MaterialPageRoute(
+          builder: (_) => PlaceholderScreen(title: title),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

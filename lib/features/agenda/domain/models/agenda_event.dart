@@ -184,7 +184,9 @@ class AgendaReminder {
     this.customTriggerAt,
   });
 
-  int? get minutesBefore => preset == AgendaReminderPreset.custom ? customMinutesBefore : preset.defaultMinutesBefore;
+  int? get minutesBefore => preset == AgendaReminderPreset.custom
+      ? customMinutesBefore
+      : preset.defaultMinutesBefore;
 
   String get label => preset.label;
 
@@ -195,7 +197,9 @@ class AgendaReminder {
 
     final minutes = minutesBefore;
     if (minutes == null) {
-      throw const FormatException('El recordatorio personalizado requiere fecha y hora o minutos.');
+      throw FormatException(
+        'El recordatorio personalizado requiere fecha y hora o minutos.',
+      );
     }
     return eventStart.subtract(Duration(minutes: minutes));
   }
@@ -252,7 +256,7 @@ class AgendaEvent {
   AgendaEvent({
     required this.id,
     required String title,
-    this.description = '',
+    String description = '',
     required DateTime date,
     required this.startMinutes,
     this.endMinutes,
@@ -285,24 +289,39 @@ class AgendaEvent {
 
   DateTime get startDateTime {
     final minutes = allDay ? 0 : startMinutes;
-    return DateTime(date.year, date.month, date.day, minutes ~/ 60, minutes % 60);
+    return DateTime(
+      date.year,
+      date.month,
+      date.day,
+      minutes ~/ 60,
+      minutes % 60,
+    );
   }
 
   DateTime? get endDateTime {
     if (endMinutes == null) return null;
-    return DateTime(date.year, date.month, date.day, endMinutes! ~/ 60, endMinutes! % 60);
+    return DateTime(
+      date.year,
+      date.month,
+      date.day,
+      endMinutes! ~/ 60,
+      endMinutes! % 60,
+    );
   }
 
   AgendaEvent markTaskCompleted(bool completed, {DateTime? updatedAt}) {
     return copyWith(
-      status: completed ? AgendaEventStatus.completed : AgendaEventStatus.pending,
+      status:
+          completed ? AgendaEventStatus.completed : AgendaEventStatus.pending,
       updatedAt: updatedAt ?? DateTime.now(),
     );
   }
 
   bool occursOn(DateTime other) {
     final normalized = normalizeDate(other);
-    return normalized.year == date.year && normalized.month == date.month && normalized.day == date.day;
+    return normalized.year == date.year &&
+        normalized.month == date.month &&
+        normalized.day == date.day;
   }
 
   String? get reminderNotificationId {
@@ -313,24 +332,30 @@ class AgendaEvent {
 
   void validate() {
     if (title.isEmpty) {
-      throw const FormatException('El título es obligatorio.');
+      throw FormatException('El título es obligatorio.');
     }
     if (startMinutes < 0 || startMinutes > 1439) {
-      throw const FormatException('La hora de inicio es inválida.');
+      throw FormatException('La hora de inicio es inválida.');
     }
     if (endMinutes != null && (endMinutes! < 0 || endMinutes! > 1439)) {
-      throw const FormatException('La hora final es inválida.');
+      throw FormatException('La hora final es inválida.');
     }
     if (!allDay && endMinutes != null && endMinutes! < startMinutes) {
-      throw const FormatException('La hora final no puede ser anterior a la hora inicial.');
+      throw FormatException(
+        'La hora final no puede ser anterior a la hora inicial.',
+      );
     }
     if (allDay && endMinutes != null && endMinutes! < 0) {
-      throw const FormatException('El evento de todo el día no admite hora final inválida.');
+      throw FormatException(
+        'El evento de todo el día no admite hora final inválida.',
+      );
     }
     if (reminder != null) {
       final triggerAt = reminder!.resolveTriggerAt(startDateTime);
       if (triggerAt.isAfter(startDateTime)) {
-        throw const FormatException('El recordatorio no puede ocurrir después del inicio del evento.');
+        throw FormatException(
+          'El recordatorio no puede ocurrir después del inicio del evento.',
+        );
       }
     }
   }
@@ -358,15 +383,20 @@ class AgendaEvent {
       description: description ?? this.description,
       date: date ?? this.date,
       startMinutes: startMinutes ?? this.startMinutes,
-      endMinutes: identical(endMinutes, _sentinel) ? this.endMinutes : endMinutes as int?,
+      endMinutes: identical(endMinutes, _sentinel)
+          ? this.endMinutes
+          : endMinutes as int?,
       allDay: allDay ?? this.allDay,
       type: type ?? this.type,
-      location: identical(location, _sentinel) ? this.location : location as String?,
+      location:
+          identical(location, _sentinel) ? this.location : location as String?,
       status: status ?? this.status,
       notes: notes ?? this.notes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      reminder: identical(reminder, _sentinel) ? this.reminder : reminder as AgendaReminder?,
+      reminder: identical(reminder, _sentinel)
+          ? this.reminder
+          : reminder as AgendaReminder?,
       relations: relations ?? this.relations,
     );
   }
@@ -408,14 +438,22 @@ class AgendaEvent {
         orElse: () => AgendaEventStatus.pending,
       ),
       notes: json['notes'] as String? ?? '',
-      createdAt: json['createdAt'] == null ? DateTime.now() : DateTime.parse(json['createdAt'] as String).toLocal(),
-      updatedAt: json['updatedAt'] == null ? DateTime.now() : DateTime.parse(json['updatedAt'] as String).toLocal(),
+      createdAt: json['createdAt'] == null
+          ? DateTime.now()
+          : DateTime.parse(json['createdAt'] as String).toLocal(),
+      updatedAt: json['updatedAt'] == null
+          ? DateTime.now()
+          : DateTime.parse(json['updatedAt'] as String).toLocal(),
       reminder: json['reminder'] == null
           ? null
-          : AgendaReminder.fromJson(Map<String, dynamic>.from(json['reminder'] as Map)),
+          : AgendaReminder.fromJson(
+              Map<String, dynamic>.from(json['reminder'] as Map),
+            ),
       relations: json['relations'] == null
           ? const AgendaRelations()
-          : AgendaRelations.fromJson(Map<String, dynamic>.from(json['relations'] as Map)),
+          : AgendaRelations.fromJson(
+              Map<String, dynamic>.from(json['relations'] as Map),
+            ),
     );
   }
 }

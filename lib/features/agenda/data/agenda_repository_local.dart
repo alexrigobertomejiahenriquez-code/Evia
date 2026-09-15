@@ -23,7 +23,9 @@ class AgendaRepositoryLocal implements AgendaRepository {
 
       for (final item in decoded) {
         try {
-          events.add(AgendaEvent.fromJson(Map<String, dynamic>.from(item as Map)));
+          events.add(
+            AgendaEvent.fromJson(Map<String, dynamic>.from(item as Map)),
+          );
         } catch (_) {
           dirty = true;
         }

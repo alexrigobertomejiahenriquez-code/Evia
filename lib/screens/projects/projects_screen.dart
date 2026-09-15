@@ -72,8 +72,12 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         title: const Text('Eliminar Proyecto'),
         content: Text('¿Eliminar "${project.name}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancelar')),
-          ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Eliminar')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancelar')),
+          ElevatedButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Eliminar')),
         ],
       ),
     );
@@ -107,7 +111,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Row(
                 children: [
                   _buildStatusChip('all', 'Todos'),
@@ -115,7 +120,11 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   _buildStatusChip('in_progress', 'En Progreso'),
                   _buildStatusChip('completed', 'Completado'),
                   _buildStatusChip('on_hold', 'En Pausa'),
-                ].map((w) => Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0), child: w)).toList(),
+                ]
+                    .map((w) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: w))
+                    .toList(),
               ),
             ),
           ),
@@ -132,7 +141,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     : ListView.builder(
                         padding: const EdgeInsets.all(8.0),
                         itemCount: filtered.length,
-                        itemBuilder: (context, index) => _buildProjectCard(filtered[index]),
+                        itemBuilder: (context, index) =>
+                            _buildProjectCard(filtered[index]),
                       ),
           ),
         ],
@@ -170,15 +180,19 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           backgroundColor: statusColors[project.status] ?? Colors.grey,
           child: Icon(Icons.folder_open, color: Colors.white),
         ),
-        title: Text(project.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(project.name,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(project.description, maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(project.description,
+                maxLines: 1, overflow: TextOverflow.ellipsis),
             const SizedBox(height: 4),
             Chip(
-              label: Text(statusLabels[project.status] ?? 'Desconocido', style: const TextStyle(fontSize: 12)),
-              backgroundColor: statusColors[project.status]?.withOpacity(0.3),
+              label: Text(statusLabels[project.status] ?? 'Desconocido',
+                  style: const TextStyle(fontSize: 12)),
+              backgroundColor:
+                  statusColors[project.status]?.withValues(alpha: 0.3),
             ),
           ],
         ),

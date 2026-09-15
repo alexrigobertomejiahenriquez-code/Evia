@@ -12,7 +12,8 @@ import '../../models/notification_item.dart';
 class NotificationServiceLocal {
   static const String _storageKey = 'evia_notifications';
 
-  Future<SharedPreferences> get _prefs async => await SharedPreferences.getInstance();
+  Future<SharedPreferences> get _prefs async =>
+      await SharedPreferences.getInstance();
 
   Future<List<NotificationItem>> getNotifications() async {
     final prefs = await _prefs;
@@ -21,7 +22,8 @@ class NotificationServiceLocal {
     try {
       final decoded = jsonDecode(raw) as List<dynamic>;
       return decoded
-          .map((e) => NotificationItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) =>
+              NotificationItem.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList();
     } catch (e) {
       // Datos corruptos o parse error: limpiar almacenamiento y devolver vacío

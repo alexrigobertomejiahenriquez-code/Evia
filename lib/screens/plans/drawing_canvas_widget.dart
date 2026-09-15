@@ -35,13 +35,23 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
 
   void _onPanStart(DragStartDetails details) {
     _isDrawing = true;
-    final points = [DrawingPoint(offset: details.localPosition, paint: Paint()..color = _paint.color..strokeWidth = _paint.strokeWidth)];
+    final points = [
+      DrawingPoint(
+          offset: details.localPosition,
+          paint: Paint()
+            ..color = _paint.color
+            ..strokeWidth = _paint.strokeWidth)
+    ];
     _lines.add(DrawingLine(points: points, paint: _paint));
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
     if (!_isDrawing || _lines.isEmpty) return;
-    _lines.last.points.add(DrawingPoint(offset: details.localPosition, paint: Paint()..color = _paint.color..strokeWidth = _paint.strokeWidth));
+    _lines.last.points.add(DrawingPoint(
+        offset: details.localPosition,
+        paint: Paint()
+          ..color = _paint.color
+          ..strokeWidth = _paint.strokeWidth));
     widget.onDrawingChanged(_lines);
     setState(() {});
   }
@@ -124,7 +134,9 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
                         shape: BoxShape.circle,
                         color: color,
                         border: Border.all(
-                          color: _paint.color == color ? Colors.black : Colors.transparent,
+                          color: _paint.color == color
+                              ? Colors.black
+                              : Colors.transparent,
                           width: 2,
                         ),
                       ),
@@ -143,7 +155,8 @@ class _DrawingCanvasWidgetState extends State<DrawingCanvasWidget> {
                     .toList(),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${_paint.strokeWidth.toInt()}px', style: const TextStyle(fontSize: 12)),
+                  child: Text('${_paint.strokeWidth.toInt()}px',
+                      style: const TextStyle(fontSize: 12)),
                 ),
               ),
             ],
@@ -197,7 +210,7 @@ class DrawingPainter extends CustomPainter {
   void _drawGrid(Canvas canvas, Size size) {
     const gridSize = 50.0;
     final paint = Paint()
-      ..color = Colors.grey.withOpacity(0.2)
+      ..color = Colors.grey.withValues(alpha: 0.2)
       ..strokeWidth = 0.5;
 
     for (double x = 0; x <= size.width; x += gridSize) {

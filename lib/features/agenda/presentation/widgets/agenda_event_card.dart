@@ -49,14 +49,16 @@ class AgendaEventCard extends StatelessWidget {
               children: [
                 Chip(label: Text(event.type.label)),
                 Chip(label: Text(event.status.label)),
-                if (event.reminder != null) Chip(label: Text(event.reminder!.label)),
+                if (event.reminder != null)
+                  Chip(label: Text(event.reminder!.label)),
               ],
             ),
           ],
         ),
         trailing: event.isTask
             ? IconButton(
-                tooltip: event.isCompleted ? 'Marcar pendiente' : 'Completar tarea',
+                tooltip:
+                    event.isCompleted ? 'Marcar pendiente' : 'Completar tarea',
                 onPressed: onToggleTask,
                 icon: Icon(event.isCompleted ? Icons.undo : Icons.check_circle),
               )
@@ -66,13 +68,18 @@ class AgendaEventCard extends StatelessWidget {
   }
 
   String _subtitleText() {
-    final dateText = '${event.date.day.toString().padLeft(2, '0')}/${event.date.month.toString().padLeft(2, '0')}/${event.date.year}';
+    final dateText =
+        '${event.date.day.toString().padLeft(2, '0')}/${event.date.month.toString().padLeft(2, '0')}/${event.date.year}';
     if (event.allDay) {
       return 'Todo el día • $dateText';
     }
     final start = _formatMinutes(event.startMinutes);
-    final end = event.endMinutes == null ? '' : ' - ${_formatMinutes(event.endMinutes!)}';
-    final location = event.location == null || event.location!.isEmpty ? '' : ' • ${event.location}';
+    final end = event.endMinutes == null
+        ? ''
+        : ' - ${_formatMinutes(event.endMinutes!)}';
+    final location = event.location == null || event.location!.isEmpty
+        ? ''
+        : ' • ${event.location}';
     return '$dateText • $start$end$location';
   }
 

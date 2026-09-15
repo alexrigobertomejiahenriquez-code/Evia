@@ -73,8 +73,12 @@ class _PlansScreenState extends State<PlansScreen> {
         title: const Text('Eliminar Plano'),
         content: Text('¿Eliminar "${drawing.title}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancelar')),
-          ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Eliminar')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancelar')),
+          ElevatedButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Eliminar')),
         ],
       ),
     );
@@ -104,7 +108,8 @@ class _PlansScreenState extends State<PlansScreen> {
                     children: [
                       Icon(Icons.draw, size: 64, color: Colors.grey[400]),
                       const SizedBox(height: 16),
-                      Text('Sin planos todavía', style: Theme.of(context).textTheme.bodyLarge),
+                      Text('Sin planos todavía',
+                          style: Theme.of(context).textTheme.bodyLarge),
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: _createNewDrawing,
@@ -122,8 +127,11 @@ class _PlansScreenState extends State<PlansScreen> {
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
                       child: ListTile(
                         leading: const Icon(Icons.draw),
-                        title: Text(drawing.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text('${drawing.createdAt.day}/${drawing.createdAt.month}/${drawing.createdAt.year}'),
+                        title: Text(drawing.title,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text(
+                            '${drawing.createdAt.day}/${drawing.createdAt.month}/${drawing.createdAt.year}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _deleteDrawing(drawing),

@@ -23,7 +23,8 @@ class MockProjectService implements ProjectService {
       Project(
         id: '1',
         name: 'Reforma Cocina',
-        description: 'Modernización completa de la cocina con electrodomésticos nuevos',
+        description:
+            'Modernización completa de la cocina con electrodomésticos nuevos',
         createdAt: DateTime.now().subtract(const Duration(days: 30)),
         startDate: DateTime.now().subtract(const Duration(days: 20)),
         endDate: DateTime.now().add(const Duration(days: 10)),

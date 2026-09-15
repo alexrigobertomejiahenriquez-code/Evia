@@ -4,5 +4,9 @@ class SearchResult {
   final String category; // módulo o categoría
   final String route; // ruta o acción futura
 
-  SearchResult({required this.title, required this.subtitle, required this.category, required this.route});
+  SearchResult(
+      {required this.title,
+      required this.subtitle,
+      required this.category,
+      required this.route});
 }

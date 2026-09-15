@@ -105,9 +105,9 @@
     },
     {
       "name": "google_fonts",
-      "rootUri": "file:///tmp/flutter-home/.pub-cache/hosted/pub.dev/google_fonts-4.0.5",
+      "rootUri": "file:///tmp/flutter-home/.pub-cache/hosted/pub.dev/google_fonts-8.2.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.10"
     },
     {
       "name": "hooks",
